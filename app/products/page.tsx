@@ -1,39 +1,49 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Card } from "@/components/ui/Card";
-import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { CTASection } from "@/components/marketing/CTASection";
+import { PageHeader } from "@/components/layout/PageHeader";
+import { PreviewCard } from "@/components/ui/PreviewCard";
+import { Section } from "@/components/ui/Section";
 import { SITE_NAME } from "@/lib/constants";
+import { PLACEHOLDER_PRODUCTS } from "@/lib/placeholders";
 
 export const metadata: Metadata = {
   title: "Products",
-  description: `Digital products and templates from ${SITE_NAME}.`,
+  description: `Digital guides and templates from ${SITE_NAME} to help you prepare for background checks.`,
 };
 
 export default function ProductsIndexPage() {
   return (
-    <section className="py-16 sm:py-20">
-      <Container>
-        <SectionHeading
-          title="Products"
-          description="Guides and templates will be available via Gumroad. Product pages are coming in a later phase."
-        />
+    <>
+      <PageHeader
+        eyebrow="Products"
+        title="Tools you can use before you apply"
+        description="Workbooks, templates, and kits designed for job seekers—available via Gumroad when we launch."
+      />
 
-        <Card className="mt-10 max-w-2xl">
-          <p className="text-sm text-slate-600">
-            Placeholder catalog—no products listed yet. Future items will live at{" "}
-            <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs">
-              /products/[slug]
-            </code>{" "}
-            with checkout links to Gumroad.
-          </p>
-          <p className="mt-4 text-sm text-slate-600">
-            <Link href="/" className="font-medium text-brand-600 hover:text-brand-700">
-              ← Back to home
-            </Link>
-          </p>
-        </Card>
-      </Container>
-    </section>
+      <Section>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {PLACEHOLDER_PRODUCTS.map((product) => (
+            <PreviewCard
+              key={product.slug}
+              item={product}
+              href="/products"
+              linkLabel="Coming soon"
+            />
+          ))}
+        </div>
+        <p className="mt-12 rounded-xl border border-dashed border-slate-200 bg-slate-50 px-6 py-8 text-center text-sm text-slate-600">
+          Checkout via Gumroad will be linked on each product page at{" "}
+          <code className="rounded bg-white px-1.5 py-0.5 text-xs text-slate-700">
+            /products/[slug]
+          </code>
+          .
+        </p>
+      </Section>
+
+      <CTASection
+        title="Start free while products roll out"
+        description="The readiness checklist covers the essentials—grab it now at no cost."
+      />
+    </>
   );
 }

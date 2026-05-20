@@ -2,7 +2,10 @@ export const SITE_NAME = "BackgroundReady";
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://backgroundready.com";
 export const SITE_DESCRIPTION =
-  "Practical guides, tools, and services to help you get background-check ready.";
+  "Prepare for background checks with confidence—organize your history, explain gaps, and walk into interviews ready.";
+
+export const SITE_TAGLINE =
+  "Background check readiness for job seekers";
 
 export type NavLink = {
   label: string;
@@ -10,7 +13,6 @@ export type NavLink = {
 };
 
 export const NAV_LINKS: NavLink[] = [
-  { label: "Home", href: "/" },
   { label: "Blog", href: "/blog" },
   { label: "Products", href: "/products" },
   { label: "Services", href: "/services" },
@@ -21,6 +23,11 @@ export const NAV_LINKS: NavLink[] = [
 export const PRIMARY_CTA = {
   label: "Get the free checklist",
   href: "/checklist",
+};
+
+export const SECONDARY_CTA = {
+  label: "Explore services",
+  href: "/services",
 };
 
 export const CONTACT_EMAIL = "hello@backgroundready.com";

@@ -1,39 +1,69 @@
 import type { Metadata } from "next";
-import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { CTASection } from "@/components/marketing/CTASection";
+import { PageHeader } from "@/components/layout/PageHeader";
+import { Card } from "@/components/ui/Card";
+import { Section } from "@/components/ui/Section";
 import { SITE_NAME } from "@/lib/constants";
+import { ABOUT_VALUES } from "@/lib/placeholders";
 
 export const metadata: Metadata = {
   title: "About",
-  description: `Learn about ${SITE_NAME} and our mission to help people prepare for background checks.`,
+  description: `Learn about ${SITE_NAME} and our mission to help job seekers prepare for background checks with confidence.`,
 };
 
 export default function AboutPage() {
   return (
-    <section className="py-16 sm:py-20">
-      <Container className="max-w-3xl">
-        <SectionHeading
-          title={`About ${SITE_NAME}`}
-          description="We help people understand and prepare for employment background checks—with practical content, not legal jargon."
-        />
+    <>
+      <PageHeader
+        eyebrow="About us"
+        title={`Helping job seekers face background checks with confidence`}
+        description={`${SITE_NAME} was built for people in the middle of a job search—when an offer depends on screening and every detail matters.`}
+      />
 
-        <div className="prose prose-slate mt-10 max-w-none space-y-6 text-slate-600">
+      <Section>
+        <div className="mx-auto max-w-3xl space-y-6 text-base leading-relaxed text-slate-600">
           <p>
-            Background checks can feel opaque. {SITE_NAME} exists to make the
-            process clearer: what employers typically review, how to organize
-            your records, and when to seek extra help.
+            Background checks can feel like a black box. You&apos;re asked for
+            years of history, references who may not remember you, and dates that
+            have to match across every form you&apos;ve filled out.
           </p>
           <p>
-            This site is being built in phases. You&apos;ll soon find articles,
-            digital products, and services—all focused on readiness, not fear.
+            We create practical resources—articles, templates, and services—that
+            help you organize your story, explain gaps honestly, and show up to
+            interviews prepared instead of anxious.
           </p>
           <p>
-            <strong className="text-slate-900">Note:</strong> Content on this
-            site is for general educational purposes and is not legal advice.
-            Consult a qualified professional for your specific situation.
+            Our approach is educational and empowering. We don&apos;t promise to
+            fix your record; we help you present it clearly and consistently so
+            employers can move your hire forward.
           </p>
         </div>
-      </Container>
-    </section>
+
+        <div className="mt-16 grid gap-6 md:grid-cols-3">
+          {ABOUT_VALUES.map((value) => (
+            <Card key={value.title}>
+              <h2 className="text-lg font-semibold text-navy-900">{value.title}</h2>
+              <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                {value.description}
+              </p>
+            </Card>
+          ))}
+        </div>
+
+        <Card className="mx-auto mt-12 max-w-3xl border-brand-100 bg-brand-50/50">
+          <p className="text-sm font-semibold text-navy-900">Important note</p>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+            Content on {SITE_NAME} is for general educational purposes only and is
+            not legal advice. Laws and employer policies vary. Consult a qualified
+            professional for guidance specific to your situation.
+          </p>
+        </Card>
+      </Section>
+
+      <CTASection
+        title="Ready to get organized?"
+        description="Start with our free checklist—a step-by-step prep list you can complete before screening begins."
+      />
+    </>
   );
 }

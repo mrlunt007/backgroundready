@@ -1,18 +1,19 @@
+import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
-import { Container } from "@/components/ui/Container";
+import { Section } from "@/components/ui/Section";
 
 export default function NotFound() {
   return (
-    <section className="py-24">
-      <Container className="text-center">
-        <h1 className="text-4xl font-bold text-slate-900">Page not found</h1>
-        <p className="mt-4 text-slate-600">
-          The page you&apos;re looking for doesn&apos;t exist or has moved.
-        </p>
-        <Button href="/" className="mt-8">
-          Go home
+    <>
+      <PageHeader
+        title="Page not found"
+        description="The page you're looking for doesn't exist or may have moved."
+      />
+      <Section containerClassName="text-center">
+        <Button href="/" size="lg">
+          Back to home
         </Button>
-      </Container>
-    </section>
+      </Section>
+    </>
   );
 }

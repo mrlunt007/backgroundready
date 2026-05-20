@@ -1,32 +1,45 @@
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { PRIMARY_CTA } from "@/lib/constants";
+import { PRIMARY_CTA, SECONDARY_CTA } from "@/lib/constants";
 
 type CTASectionProps = {
   title?: string;
   description?: string;
-  ctaLabel?: string;
-  ctaHref?: string;
 };
 
 export function CTASection({
-  title = "Get background-check ready",
-  description = "Download the free checklist and start preparing with confidence.",
-  ctaLabel = PRIMARY_CTA.label,
-  ctaHref = PRIMARY_CTA.href,
+  title = "Start preparing tonight",
+  description = "Download the free checklist and work through your history, gaps, and references step by step.",
 }: CTASectionProps) {
   return (
-    <section className="bg-brand-600 py-16 text-white sm:py-20">
-      <Container className="text-center">
-        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{title}</h2>
-        <p className="mx-auto mt-4 max-w-xl text-base text-brand-100 sm:text-lg">
+    <section className="relative overflow-hidden bg-navy-950 py-16 sm:py-24">
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-brand-600/20 via-transparent to-transparent"
+        aria-hidden
+      />
+      <Container className="relative text-center">
+        <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          {title}
+        </h2>
+        <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">
           {description}
         </p>
-        <div className="mt-8">
-          <Button href={ctaHref} variant="secondary" className="text-brand-700">
-            {ctaLabel}
+        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <Button href={PRIMARY_CTA.href} size="lg">
+            {PRIMARY_CTA.label}
+          </Button>
+          <Button
+            href={SECONDARY_CTA.href}
+            variant="secondary"
+            size="lg"
+            className="border-slate-600 bg-transparent text-white hover:bg-white/10"
+          >
+            {SECONDARY_CTA.label}
           </Button>
         </div>
+        <p className="mt-6 text-sm text-slate-500">
+          Free to start · No credit card · Unsubscribe anytime
+        </p>
       </Container>
     </section>
   );
