@@ -3,8 +3,9 @@ import { CTASection } from "@/components/marketing/CTASection";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { PreviewCard } from "@/components/ui/PreviewCard";
 import { Section } from "@/components/ui/Section";
+import { getAllBlogPosts } from "@/lib/content/blog";
+import { blogPostToPreviewItem } from "@/lib/content/preview";
 import { SITE_NAME } from "@/lib/constants";
-import { PLACEHOLDER_ARTICLES } from "@/lib/placeholders";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -12,6 +13,8 @@ export const metadata: Metadata = {
 };
 
 export default function BlogIndexPage() {
+  const posts = getAllBlogPosts();
+
   return (
     <>
       <PageHeader
@@ -21,23 +24,20 @@ export default function BlogIndexPage() {
       />
 
       <Section>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {PLACEHOLDER_ARTICLES.map((article) => (
-            <PreviewCard
-              key={article.slug}
-              item={article}
-              href="/blog"
-              linkLabel="Coming soon"
-            />
-          ))}
-        </div>
-        <p className="mt-12 rounded-xl border border-dashed border-slate-200 bg-slate-50 px-6 py-8 text-center text-sm text-slate-600">
-          Full MDX blog system launching in a later phase. Articles will be available at{" "}
-          <code className="rounded bg-white px-1.5 py-0.5 text-xs text-slate-700">
-            /blog/[slug]
-          </code>
-          .
-        </p>
+        {posts.length > 0 ? (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post) => (
+              <PreviewCard
+                key={post.slug}
+                item={blogPostToPreviewItem(post)}
+                href={`/blog/${post.slug}`}
+                linkLabel="Read article"
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-slate-600">No articles published yet.</p>
+        )}
       </Section>
 
       <CTASection

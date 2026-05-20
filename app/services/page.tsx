@@ -6,8 +6,9 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { PreviewCard } from "@/components/ui/PreviewCard";
 import { Section } from "@/components/ui/Section";
+import { getAllServices } from "@/lib/content/services";
+import { serviceToPreviewItem } from "@/lib/content/preview";
 import { SITE_NAME } from "@/lib/constants";
-import { PLACEHOLDER_SERVICES } from "@/lib/placeholders";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -18,21 +19,26 @@ const processSteps = [
   {
     step: "01",
     title: "Share your timeline",
-    description: "Walk us through your work history, gaps, and any concerns before screening.",
+    description:
+      "Walk us through your work history, gaps, and any concerns before screening.",
   },
   {
     step: "02",
     title: "Get a clear action plan",
-    description: "We flag inconsistencies, reference risks, and talking points to practice.",
+    description:
+      "We flag inconsistencies, reference risks, and talking points to practice.",
   },
   {
     step: "03",
     title: "Go in prepared",
-    description: "Apply and interview with aligned records and confident answers.",
+    description:
+      "Apply and interview with aligned records and confident answers.",
   },
 ];
 
 export default function ServicesIndexPage() {
+  const services = getAllServices();
+
   return (
     <>
       <PageHeader
@@ -46,16 +52,20 @@ export default function ServicesIndexPage() {
       </PageHeader>
 
       <Section variant="muted">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {PLACEHOLDER_SERVICES.map((service) => (
-            <PreviewCard
-              key={service.slug}
-              item={service}
-              href="/services"
-              linkLabel="Coming soon"
-            />
-          ))}
-        </div>
+        {services.length > 0 ? (
+          <div className="grid gap-6 md:grid-cols-2">
+            {services.map((service) => (
+              <PreviewCard
+                key={service.slug}
+                item={serviceToPreviewItem(service)}
+                href={`/services/${service.slug}`}
+                linkLabel="View service"
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-slate-600">No services listed yet.</p>
+        )}
       </Section>
 
       <Section>
@@ -77,8 +87,7 @@ export default function ServicesIndexPage() {
           Questions?{" "}
           <Link href="/contact" className="font-semibold text-brand-700 hover:text-brand-800">
             Contact {SITE_NAME}
-          </Link>{" "}
-          to discuss which service fits your timeline.
+          </Link>
         </p>
       </Section>
 

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
-import type { PreviewItem } from "@/lib/placeholders";
+import type { PreviewItem } from "@/lib/content/preview";
 import { cn } from "@/lib/utils";
 
 type PreviewCardProps = {

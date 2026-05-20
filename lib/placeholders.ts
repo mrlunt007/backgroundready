@@ -6,14 +6,6 @@ export type Feature = {
   icon: "clipboard" | "calendar" | "users" | "message" | "shield" | "sparkles";
 };
 
-export type PreviewItem = {
-  slug: string;
-  title: string;
-  description: string;
-  meta?: string;
-  badge?: string;
-};
-
 export type FAQItem = {
   question: string;
   answer: string;
@@ -55,81 +47,6 @@ export const FEATURES: Feature[] = [
     title: "Tools that save time",
     description:
       "Checklists, templates, and guides you can use tonight—not a 50-page manual you'll never finish.",
-  },
-];
-
-export const PLACEHOLDER_PRODUCTS: PreviewItem[] = [
-  {
-    slug: "work-history-workbook",
-    title: "Work History Workbook",
-    description:
-      "A fillable guide to document every role, manager, and date before you apply.",
-    meta: "From $19",
-    badge: "Popular",
-  },
-  {
-    slug: "gap-explanation-templates",
-    title: "Gap Explanation Templates",
-    description:
-      "Ready-to-adapt scripts for resumes, applications, and recruiter conversations.",
-    meta: "From $12",
-  },
-  {
-    slug: "reference-prep-kit",
-    title: "Reference Prep Kit",
-    description:
-      "Email templates and a checklist to brief references before the verifier calls.",
-    meta: "From $15",
-  },
-];
-
-export const PLACEHOLDER_SERVICES: PreviewItem[] = [
-  {
-    slug: "record-review",
-    title: "Background Record Review",
-    description:
-      "One-on-one review of your work history, gaps, and disclosure strategy before you apply.",
-    meta: "Starting at $149",
-    badge: "Most requested",
-  },
-  {
-    slug: "mock-interview",
-    title: "Readiness Mock Interview",
-    description:
-      "Practice answering background-related questions with structured feedback.",
-    meta: "Starting at $99",
-  },
-  {
-    slug: "application-audit",
-    title: "Application Consistency Audit",
-    description:
-      "We compare your resume, LinkedIn, and forms so dates and titles align everywhere.",
-    meta: "Starting at $79",
-  },
-];
-
-export const PLACEHOLDER_ARTICLES: PreviewItem[] = [
-  {
-    slug: "what-employers-verify",
-    title: "What Employers Actually Verify in a Background Check",
-    description:
-      "A plain-language overview of the most common checks and timelines.",
-    meta: "6 min read",
-    badge: "Featured",
-  },
-  {
-    slug: "explain-employment-gap",
-    title: "How to Explain an Employment Gap Without Oversharing",
-    description:
-      "Framing strategies that build trust with recruiters and hiring managers.",
-    meta: "5 min read",
-  },
-  {
-    slug: "reference-mistakes",
-    title: "5 Reference Mistakes That Delay Your Offer",
-    description:
-      "Avoid wrong numbers, surprised managers, and mismatched job titles.",
-    meta: "4 min read",
   },
 ];
 

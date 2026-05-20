@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { PreviewCard } from "@/components/ui/PreviewCard";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import type { PreviewItem } from "@/lib/placeholders";
+import type { PreviewItem } from "@/lib/content/preview";
 
 type PreviewGridSectionProps = {
   id?: string;
@@ -31,7 +31,7 @@ export function PreviewGridSection({
   viewAllLabel,
   linkLabel = "Learn more",
   variant = "default",
-  detailPagesEnabled = false,
+  detailPagesEnabled = true,
 }: PreviewGridSectionProps) {
   return (
     <Section id={id} variant={variant}>
@@ -59,12 +59,14 @@ export function PreviewGridSection({
           />
         ))}
       </div>
-      <p className="mt-8 text-center text-sm text-slate-500">
-        Detailed pages coming soon.{" "}
-        <Link href={viewAllHref} className="font-medium text-brand-700 hover:text-brand-800">
-          Browse all {viewAllLabel.toLowerCase().replace("view all ", "")}
-        </Link>
-      </p>
+      {!detailPagesEnabled ? (
+        <p className="mt-8 text-center text-sm text-slate-500">
+          Detailed pages coming soon.{" "}
+          <Link href={viewAllHref} className="font-medium text-brand-700 hover:text-brand-800">
+            Browse all {viewAllLabel.toLowerCase().replace("view all ", "")}
+          </Link>
+        </p>
+      ) : null}
     </Section>
   );
 }
