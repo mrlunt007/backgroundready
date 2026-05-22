@@ -24,9 +24,9 @@ export default function ProductsIndexPage() {
         description="Workbooks, templates, and kits designed for job seekers—available via Gumroad."
         align="split"
         image={{
-          src: IMAGES.officeAtrium.src,
-          alt: IMAGES.officeAtrium.alt,
-          aspect: "portrait",
+          src: IMAGES.laptopWorking.src,
+          alt: IMAGES.laptopWorking.alt,
+          aspect: "wide",
         }}
       />
 

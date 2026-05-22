@@ -2,6 +2,8 @@ import { CTASection } from "@/components/marketing/CTASection";
 import { FAQSection } from "@/components/marketing/FAQSection";
 import { FeaturesSection } from "@/components/marketing/FeaturesSection";
 import { HeroSection } from "@/components/marketing/HeroSection";
+import { OutcomeSection } from "@/components/marketing/OutcomeSection";
+import { PainPointSection } from "@/components/marketing/PainPointSection";
 import { PreviewGridSection } from "@/components/marketing/PreviewGridSection";
 import { getAllBlogPosts } from "@/lib/content/blog";
 import {
@@ -21,7 +23,9 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <PainPointSection />
       <FeaturesSection />
+      <OutcomeSection />
       <PreviewGridSection
         id="products"
         eyebrow="Products"

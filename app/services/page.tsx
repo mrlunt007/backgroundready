@@ -48,9 +48,9 @@ export default function ServicesIndexPage() {
         description="When templates aren't enough, work directly with us to review your history and build a disclosure strategy."
         align="split"
         image={{
-          src: IMAGES.handshakeOffer.src,
-          alt: IMAGES.handshakeOffer.alt,
-          aspect: "portrait",
+          src: IMAGES.handshakeOutdoor.src,
+          alt: IMAGES.handshakeOutdoor.alt,
+          aspect: "wide",
         }}
       >
         <Button href="/contact" size="lg">

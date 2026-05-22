@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Section } from "@/components/ui/Section";
 import { CONTACT_EMAIL, SITE_NAME } from "@/lib/constants";
+import { IMAGES } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -25,6 +26,12 @@ export default function ContactPage() {
         eyebrow="Contact"
         title="We'd like to hear from you"
         description="Whether you're preparing for a check or exploring our resources, reach out and we'll get back to you."
+        align="split"
+        image={{
+          src: IMAGES.handshakeOffer.src,
+          alt: IMAGES.handshakeOffer.alt,
+          aspect: "wide",
+        }}
       />
 
       <Section containerClassName="max-w-5xl">

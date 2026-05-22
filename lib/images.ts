@@ -11,7 +11,11 @@ export const IMAGES = {
   },
   handshakeOffer: {
     src: "/images/handshake-offer.png",
-    alt: "Professional handshake across a desk, symbolizing a successful job offer",
+    alt: "Professional handshake across a desk after completing hiring paperwork",
+  },
+  handshakeOutdoor: {
+    src: "/images/handshake-outdoor.png",
+    alt: "Firm professional handshake between two people in business attire outdoors",
   },
   officeBuildingNight: {
     src: "/images/office-building-night.png",
@@ -20,6 +24,14 @@ export const IMAGES = {
   reviewingDocuments: {
     src: "/images/reviewing-documents.png",
     alt: "Professional reviewing employment documents and records at a desk",
+  },
+  laptopWorking: {
+    src: "/images/laptop-working.png",
+    alt: "Person typing on a laptop while organizing job search materials at a desk",
+  },
+  laptopConfused: {
+    src: "/images/laptop-confused.png",
+    alt: "Job seeker looking frustrated and confused while reviewing information on a laptop",
   },
 } as const;
 
