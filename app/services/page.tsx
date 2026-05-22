@@ -9,6 +9,7 @@ import { Section } from "@/components/ui/Section";
 import { getAllServices } from "@/lib/content/services";
 import { serviceToPreviewItem } from "@/lib/content/preview";
 import { SITE_NAME } from "@/lib/constants";
+import { IMAGES } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -45,6 +46,12 @@ export default function ServicesIndexPage() {
         eyebrow="Services"
         title="Personal support for your unique situation"
         description="When templates aren't enough, work directly with us to review your history and build a disclosure strategy."
+        align="split"
+        image={{
+          src: IMAGES.handshakeOffer.src,
+          alt: IMAGES.handshakeOffer.alt,
+          aspect: "portrait",
+        }}
       >
         <Button href="/contact" size="lg">
           Request a consultation

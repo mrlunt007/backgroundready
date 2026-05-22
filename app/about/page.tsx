@@ -4,7 +4,9 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { Section } from "@/components/ui/Section";
 import { SITE_NAME } from "@/lib/constants";
+import { ContentImage } from "@/components/ui/ContentImage";
 import { ABOUT_VALUES } from "@/lib/placeholders";
+import { IMAGES } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "About",
@@ -21,7 +23,15 @@ export default function AboutPage() {
       />
 
       <Section>
-        <div className="mx-auto max-w-3xl space-y-6 text-base leading-relaxed text-slate-600">
+        <div className="grid items-start gap-10 lg:grid-cols-5 lg:gap-14">
+          <ContentImage
+            src={IMAGES.officeCollaboration.src}
+            alt={IMAGES.officeCollaboration.alt}
+            aspect="wide"
+            sizes="(max-width: 1024px) 100vw, 40vw"
+            className="lg:col-span-2"
+          />
+          <div className="space-y-6 text-base leading-relaxed text-slate-600 lg:col-span-3">
           <p>
             Background checks can feel like a black box. You&apos;re asked for
             years of history, references who may not remember you, and dates that
@@ -37,6 +47,7 @@ export default function AboutPage() {
             fix your record; we help you present it clearly and consistently so
             employers can move your hire forward.
           </p>
+          </div>
         </div>
 
         <div className="mt-16 grid gap-6 md:grid-cols-3">

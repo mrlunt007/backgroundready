@@ -6,6 +6,7 @@ import { Section } from "@/components/ui/Section";
 import { getAllProducts } from "@/lib/content/products";
 import { productToPreviewItem } from "@/lib/content/preview";
 import { SITE_NAME } from "@/lib/constants";
+import { IMAGES } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Products",
@@ -21,6 +22,12 @@ export default function ProductsIndexPage() {
         eyebrow="Products"
         title="Tools you can use before you apply"
         description="Workbooks, templates, and kits designed for job seekers—available via Gumroad."
+        align="split"
+        image={{
+          src: IMAGES.officeAtrium.src,
+          alt: IMAGES.officeAtrium.alt,
+          aspect: "portrait",
+        }}
       />
 
       <Section>

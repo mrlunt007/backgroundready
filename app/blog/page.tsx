@@ -6,6 +6,7 @@ import { Section } from "@/components/ui/Section";
 import { getAllBlogPosts } from "@/lib/content/blog";
 import { blogPostToPreviewItem } from "@/lib/content/preview";
 import { SITE_NAME } from "@/lib/constants";
+import { IMAGES } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -21,6 +22,12 @@ export default function BlogIndexPage() {
         eyebrow="Blog"
         title="Guides for every stage of your search"
         description="Practical articles on what employers verify, how to explain your history, and how to stay confident through screening."
+        align="split"
+        image={{
+          src: IMAGES.officeAtrium.src,
+          alt: IMAGES.officeAtrium.alt,
+          aspect: "wide",
+        }}
       />
 
       <Section>

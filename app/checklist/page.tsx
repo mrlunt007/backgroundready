@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Section } from "@/components/ui/Section";
 import { PRIMARY_CTA, SITE_NAME } from "@/lib/constants";
+import { IMAGES } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Free checklist",
@@ -51,6 +52,12 @@ export default function ChecklistPage() {
         eyebrow="Free resource"
         title="Background-check readiness checklist"
         description="A practical prep list to complete before HR runs your screening—so you're organized, not scrambling."
+        align="split"
+        image={{
+          src: IMAGES.reviewingDocuments.src,
+          alt: IMAGES.reviewingDocuments.alt,
+          aspect: "portrait",
+        }}
       />
 
       <Section containerClassName="max-w-5xl">
