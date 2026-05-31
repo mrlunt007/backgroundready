@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CTASection } from "@/components/marketing/CTASection";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
+import { CTAWithTrust } from "@/components/ui/CTAWithTrust";
 import { Card } from "@/components/ui/Card";
 import { PreviewCard } from "@/components/ui/PreviewCard";
 import { Section } from "@/components/ui/Section";
@@ -10,6 +11,7 @@ import { getAllServices } from "@/lib/content/services";
 import { serviceToPreviewItem } from "@/lib/content/preview";
 import { SITE_NAME } from "@/lib/constants";
 import { IMAGES } from "@/lib/images";
+import { TRUST_COPY } from "@/lib/trust-copy";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -53,9 +55,11 @@ export default function ServicesIndexPage() {
           aspect: "wide",
         }}
       >
-        <Button href="/contact" size="lg">
-          Request a consultation
-        </Button>
+        <CTAWithTrust trust={TRUST_COPY.service}>
+          <Button href="/contact" size="lg">
+            Request a consultation
+          </Button>
+        </CTAWithTrust>
       </PageHeader>
 
       <Section variant="muted">

@@ -1,5 +1,6 @@
 import readingTime from "reading-time";
 import { compileMdxBody } from "@/lib/content/compile-mdx";
+import { injectBlogInlineCTA } from "@/lib/content/inject-blog-cta";
 import {
   isVisibleInProduction,
   listMdxFiles,
@@ -52,7 +53,7 @@ export async function getBlogPostWithContent(
   const post = loadBlogPostMeta(filename);
   if (!post) return undefined;
 
-  const content = await compileMdxBody(mdxSource);
+  const content = await compileMdxBody(injectBlogInlineCTA(mdxSource));
 
   return { ...post, content };
 }

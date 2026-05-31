@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/Button";
+import { CTAWithTrust } from "@/components/ui/CTAWithTrust";
 import { ContentImage } from "@/components/ui/ContentImage";
 import { Section } from "@/components/ui/Section";
 import { SECONDARY_CTA } from "@/lib/constants";
 import { IMAGES } from "@/lib/images";
+import { TRUST_COPY } from "@/lib/trust-copy";
 
 const outcomes = [
   {
@@ -45,9 +47,11 @@ export function OutcomeSection() {
               </div>
             ))}
           </div>
-          <Button href={SECONDARY_CTA.href} className="mt-8" size="lg">
-            {SECONDARY_CTA.label}
-          </Button>
+          <CTAWithTrust trust={TRUST_COPY.service} className="mt-8">
+            <Button href={SECONDARY_CTA.href} size="lg">
+              {SECONDARY_CTA.label}
+            </Button>
+          </CTAWithTrust>
         </div>
         <ContentImage
           src={IMAGES.handshakeOutdoor.src}

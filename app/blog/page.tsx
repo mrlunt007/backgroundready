@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { CTASection } from "@/components/marketing/CTASection";
+import { BlogCard } from "@/components/marketing/BlogCard";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { PreviewCard } from "@/components/ui/PreviewCard";
 import { Section } from "@/components/ui/Section";
 import { getAllBlogPosts } from "@/lib/content/blog";
 import { blogPostToPreviewItem } from "@/lib/content/preview";
@@ -34,7 +34,7 @@ export default function BlogIndexPage() {
         {posts.length > 0 ? (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {posts.map((post) => (
-              <PreviewCard
+              <BlogCard
                 key={post.slug}
                 item={blogPostToPreviewItem(post)}
                 href={`/blog/${post.slug}`}

@@ -3,9 +3,11 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { TrustMicroCopy } from "@/components/ui/TrustMicroCopy";
 import { Section } from "@/components/ui/Section";
 import { PRIMARY_CTA, SITE_NAME } from "@/lib/constants";
 import { IMAGES } from "@/lib/images";
+import { TRUST_COPY } from "@/lib/trust-copy";
 
 export const metadata: Metadata = {
   title: "Free checklist",
@@ -115,9 +117,11 @@ export default function ChecklistPage() {
                 placeholder="you@example.com"
                 disabled
               />
+              <TrustMicroCopy>{TRUST_COPY.checklistEmail}</TrustMicroCopy>
               <Button disabled className="w-full" size="lg">
                 {PRIMARY_CTA.label} (soon)
               </Button>
+              <TrustMicroCopy>{TRUST_COPY.checklist}</TrustMicroCopy>
             </div>
             <p className="mt-4 text-xs text-slate-500">
               By signing up, you agree to receive emails from {SITE_NAME}. Unsubscribe

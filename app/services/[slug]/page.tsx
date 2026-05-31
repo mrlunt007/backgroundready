@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CTASection } from "@/components/marketing/CTASection";
 import { Button } from "@/components/ui/Button";
+import { CTAWithTrust } from "@/components/ui/CTAWithTrust";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import { Container } from "@/components/ui/Container";
@@ -14,6 +15,7 @@ import {
   getServiceWithContent,
 } from "@/lib/content/services";
 import { createMetadata } from "@/lib/seo/metadata";
+import { TRUST_COPY } from "@/lib/trust-copy";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -64,9 +66,11 @@ export default async function ServicePage({ params }: PageProps) {
             <p className="mt-4 text-lg leading-relaxed text-slate-600">
               {service.description}
             </p>
-            <Button href={service.ctaUrl} size="lg" className="mt-8">
-              {service.ctaLabel}
-            </Button>
+            <CTAWithTrust trust={TRUST_COPY.service} className="mt-8">
+              <Button href={service.ctaUrl} size="lg">
+                {service.ctaLabel}
+              </Button>
+            </CTAWithTrust>
           </div>
         </Container>
       </div>
@@ -157,9 +161,11 @@ export default async function ServicePage({ params }: PageProps) {
                 </Card>
               ) : null}
 
-              <Button href={service.ctaUrl} className="w-full">
-                {service.ctaLabel}
-              </Button>
+              <CTAWithTrust trust={TRUST_COPY.service}>
+                <Button href={service.ctaUrl} className="w-full">
+                  {service.ctaLabel}
+                </Button>
+              </CTAWithTrust>
             </div>
           </div>
         </div>

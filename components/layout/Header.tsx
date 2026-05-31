@@ -6,16 +6,16 @@ import { cn } from "@/lib/utils";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 shadow-sm shadow-slate-900/5 backdrop-blur-md">
-      <Container className="flex h-[4.25rem] items-center justify-between gap-6">
-        <Link href="/" className="group flex items-center gap-2.5">
+    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-sm shadow-slate-900/5 backdrop-blur-md">
+      <Container className="flex h-[4.25rem] items-center justify-between gap-4">
+        <Link href="/" className="group flex min-w-0 items-center gap-2.5">
           <span
-            className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-600 text-sm font-bold text-white shadow-sm shadow-brand-600/30"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[var(--brand-primary)] text-sm font-bold text-white shadow-sm shadow-[var(--brand-primary)]/30"
             aria-hidden
           >
             BR
           </span>
-          <span className="text-lg font-bold tracking-tight text-navy-900 group-hover:text-brand-700 transition-colors">
+          <span className="truncate text-lg font-bold tracking-tight text-navy-900 transition-colors group-hover:text-[var(--brand-primary-dark)]">
             {SITE_NAME}
           </span>
         </Link>
@@ -35,13 +35,12 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2 sm:gap-3">
-          <Button
-            href={PRIMARY_CTA.href}
-            size="sm"
-            className="hidden sm:inline-flex"
-          >
+        <div className="flex shrink-0 items-center gap-2">
+          <Button href={PRIMARY_CTA.href} size="sm" className="hidden min-[480px]:inline-flex">
             {PRIMARY_CTA.label}
+          </Button>
+          <Button href={PRIMARY_CTA.href} size="sm" className="min-[480px]:hidden">
+            Checklist
           </Button>
 
           <details className="relative lg:hidden">

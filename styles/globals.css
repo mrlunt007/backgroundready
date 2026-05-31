@@ -1,26 +1,85 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+:root {
+  /* Brand green — slightly brighter & more saturated */
+  --brand-primary: #0eb39e;
+  --brand-primary-hover: #12c9b2;
+  --brand-primary-dark: #0a9183;
+  --brand-subtle: #ecfdf8;
+  --brand-border: #a7f3e8;
+  --brand-muted: #ccfbf1;
+
+  /* Navy palette */
+  --navy-deep: #010409;
+  --navy-base: #0f172a;
+  --navy-mid: #1e293b;
+
+  /* Surfaces */
+  --surface-off-white: #faf9f7;
+  --surface-muted: #f5f4f1;
+}
+
 @theme {
-  --color-brand-50: #f0fdfa;
-  --color-brand-100: #ccfbf1;
-  --color-brand-200: #99f6e4;
-  --color-brand-500: #14b8a6;
-  --color-brand-600: #0d9488;
-  --color-brand-700: #0f766e;
-  --color-brand-800: #115e59;
+  --color-brand-50: var(--brand-subtle);
+  --color-brand-100: var(--brand-muted);
+  --color-brand-200: var(--brand-border);
+  --color-brand-500: var(--brand-primary);
+  --color-brand-600: var(--brand-primary);
+  --color-brand-700: var(--brand-primary-dark);
+  --color-brand-800: #0f766e;
   --color-navy-50: #f8fafc;
   --color-navy-100: #f1f5f9;
-  --color-navy-800: #1e293b;
-  --color-navy-900: #0f172a;
-  --color-navy-950: #020617;
+  --color-navy-800: var(--navy-mid);
+  --color-navy-900: var(--navy-base);
+  --color-navy-950: var(--navy-deep);
+  --color-surface-off-white: var(--surface-off-white);
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), Georgia, "Times New Roman", serif;
 }
 
 body {
   @apply bg-white text-slate-700 antialiased;
 }
 
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
 ::selection {
-  @apply bg-brand-100 text-brand-800;
+  background-color: var(--brand-muted);
+  color: var(--brand-primary-dark);
+}
+
+/* Premium dark sections — subtle gradient + noise */
+.dark-section {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    var(--navy-deep) 0%,
+    var(--navy-base) 55%,
+    #141f33 100%
+  );
+  color: white;
+}
+
+.dark-section::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+}
+
+.dark-section > * {
+  position: relative;
+  z-index: 1;
 }

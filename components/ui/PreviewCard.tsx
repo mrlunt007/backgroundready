@@ -23,7 +23,7 @@ export function PreviewCard({
           <span className="text-xs font-medium text-slate-500">{item.meta}</span>
         ) : null}
       </div>
-      <h3 className="mt-4 text-lg font-semibold text-navy-900">{item.title}</h3>
+      <h3 className="mt-4 font-serif text-lg font-semibold text-navy-900">{item.title}</h3>
       <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600">
         {item.description}
       </p>

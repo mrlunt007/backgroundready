@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { CTAWithTrust } from "@/components/ui/CTAWithTrust";
 import {
   CONTACT_EMAIL,
   NAV_LINKS,
@@ -8,6 +9,7 @@ import {
   SITE_DESCRIPTION,
   SITE_NAME,
 } from "@/lib/constants";
+import { TRUST_COPY } from "@/lib/trust-copy";
 
 const resourceLinks = [
   { label: "Free checklist", href: "/checklist" },
@@ -20,12 +22,12 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-slate-200 bg-navy-950 text-slate-300">
+    <footer className="dark-section border-t border-white/5">
       <Container className="py-16">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Link href="/" className="flex items-center gap-2.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-600 text-sm font-bold text-white">
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--brand-primary)] text-sm font-bold text-white">
                 BR
               </span>
               <span className="text-lg font-bold text-white">{SITE_NAME}</span>
@@ -33,9 +35,11 @@ export function Footer() {
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">
               {SITE_DESCRIPTION}
             </p>
-            <Button href={PRIMARY_CTA.href} className="mt-6" size="sm">
-              {PRIMARY_CTA.label}
-            </Button>
+            <CTAWithTrust trust={TRUST_COPY.checklist} trustVariant="onDark" className="mt-4">
+              <Button href={PRIMARY_CTA.href} size="sm">
+                {PRIMARY_CTA.label}
+              </Button>
+            </CTAWithTrust>
           </div>
 
           <div className="grid gap-10 sm:grid-cols-2 lg:col-span-7 lg:grid-cols-3">
@@ -58,18 +62,18 @@ export function Footer() {
             <div>
               <p className="text-sm font-semibold text-white">Company</p>
               <ul className="mt-4 space-y-3">
-                {NAV_LINKS.filter((l) => l.label === "About" || l.label === "Contact").map(
-                  (link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        className="text-sm text-slate-400 transition-colors hover:text-white"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ),
-                )}
+                {NAV_LINKS.filter(
+                  (l) => l.label === "About" || l.label === "Contact",
+                ).map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-slate-400 transition-colors hover:text-white"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -89,13 +93,11 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-4 border-t border-slate-800 pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 flex flex-col gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-slate-500">
             © {year} {SITE_NAME}. All rights reserved.
           </p>
-          <p className="text-xs text-slate-600">
-            Educational content only — not legal advice.
-          </p>
+          <p className="text-xs text-slate-600">{TRUST_COPY.general}</p>
         </div>
       </Container>
     </footer>

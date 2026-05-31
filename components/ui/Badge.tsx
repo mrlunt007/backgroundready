@@ -8,7 +8,8 @@ type BadgeProps = {
 
 const variants = {
   default: "bg-slate-100 text-slate-700",
-  brand: "bg-brand-100 text-brand-800",
+  brand:
+    "bg-[var(--brand-subtle)] text-[var(--brand-primary-dark)] ring-1 ring-[var(--brand-border)]/60",
   muted: "bg-navy-100 text-navy-800",
 };
 

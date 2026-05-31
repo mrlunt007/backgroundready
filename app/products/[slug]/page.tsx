@@ -5,6 +5,7 @@ import { CTASection } from "@/components/marketing/CTASection";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
+import { CTAWithTrust } from "@/components/ui/CTAWithTrust";
 import { Container } from "@/components/ui/Container";
 import { Prose } from "@/components/ui/Prose";
 import { Section } from "@/components/ui/Section";
@@ -14,6 +15,7 @@ import {
   getProductWithContent,
 } from "@/lib/content/products";
 import { createMetadata } from "@/lib/seo/metadata";
+import { TRUST_COPY } from "@/lib/trust-copy";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -66,13 +68,17 @@ export default async function ProductPage({ params }: PageProps) {
             <p className="mt-4 text-2xl font-bold text-navy-900">
               {product.priceDisplay}
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Button href={product.gumroadUrl} external size="lg">
-                Buy on Gumroad
-              </Button>
-              <Button href="/checklist" variant="outline" size="lg">
-                Get free checklist
-              </Button>
+            <div className="mt-8 flex flex-wrap gap-6">
+              <CTAWithTrust trust={TRUST_COPY.product}>
+                <Button href={product.gumroadUrl} external size="lg">
+                  Buy on Gumroad
+                </Button>
+              </CTAWithTrust>
+              <CTAWithTrust trust={TRUST_COPY.checklist}>
+                <Button href="/checklist" variant="outline" size="lg">
+                  Get free checklist
+                </Button>
+              </CTAWithTrust>
             </div>
           </div>
         </Container>
@@ -98,13 +104,15 @@ export default async function ProductPage({ params }: PageProps) {
                 </li>
               ))}
             </ul>
-            <Button
-              href={product.gumroadUrl}
-              external
-              className="mt-6 w-full"
-            >
-              Buy on Gumroad
-            </Button>
+            <CTAWithTrust trust={TRUST_COPY.product} className="mt-6">
+              <Button
+                href={product.gumroadUrl}
+                external
+                className="w-full"
+              >
+                Buy on Gumroad
+              </Button>
+            </CTAWithTrust>
             <p className="mt-3 text-xs text-slate-500">
               Placeholder checkout URL until Gumroad products are connected.
             </p>

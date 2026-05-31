@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { CTAWithTrust } from "@/components/ui/CTAWithTrust";
 import { ContentImage } from "@/components/ui/ContentImage";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PRIMARY_CTA } from "@/lib/constants";
 import { IMAGES } from "@/lib/images";
+import { TRUST_COPY } from "@/lib/trust-copy";
 
 const painPoints = [
   "Dates on your resume don't match what HR has on file",
@@ -43,11 +45,13 @@ export function PainPointSection() {
               </li>
             ))}
           </ul>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button href={PRIMARY_CTA.href}>{PRIMARY_CTA.label}</Button>
+          <div className="mt-8 flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-8">
+            <CTAWithTrust trust={TRUST_COPY.checklist}>
+              <Button href={PRIMARY_CTA.href}>{PRIMARY_CTA.label}</Button>
+            </CTAWithTrust>
             <Link
               href="/blog"
-              className="text-sm font-semibold text-brand-700 hover:text-brand-800"
+              className="self-center text-sm font-semibold text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)] sm:self-auto sm:pt-2"
             >
               Read free guides →
             </Link>

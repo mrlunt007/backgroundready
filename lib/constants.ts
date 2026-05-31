@@ -2,7 +2,7 @@ export const SITE_NAME = "BackgroundReady";
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://backgroundready.com";
 export const SITE_DESCRIPTION =
-  "Prepare for background checks with confidence—organize your history, explain gaps, and walk into interviews ready.";
+  "Pass employment verification with confidence—organize real work history, explain gaps honestly, and align references before screening starts.";
 
 export const SITE_TAGLINE =
   "Background check readiness for job seekers";
@@ -13,10 +13,10 @@ export type NavLink = {
 };
 
 export const NAV_LINKS: NavLink[] = [
+  { label: "Verification", href: "/#verification" },
+  { label: "Approach", href: "/#philosophy" },
   { label: "Blog", href: "/blog" },
-  { label: "Products", href: "/products" },
   { label: "Services", href: "/services" },
-  { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 

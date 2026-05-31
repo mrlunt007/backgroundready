@@ -2,10 +2,13 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { CTAWithTrust } from "@/components/ui/CTAWithTrust";
 import { Input } from "@/components/ui/Input";
+import { TrustMicroCopy } from "@/components/ui/TrustMicroCopy";
 import { Section } from "@/components/ui/Section";
 import { CONTACT_EMAIL, SITE_NAME } from "@/lib/constants";
 import { IMAGES } from "@/lib/images";
+import { TRUST_COPY } from "@/lib/trust-copy";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -79,6 +82,7 @@ export default function ContactPage() {
                 placeholder="you@example.com"
                 disabled
               />
+              <TrustMicroCopy>{TRUST_COPY.checklistEmail}</TrustMicroCopy>
               <div>
                 <label
                   htmlFor="message"
@@ -95,14 +99,18 @@ export default function ContactPage() {
                   className="mt-1.5 w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-400"
                 />
               </div>
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <Button disabled>Send message (soon)</Button>
-                <Button
-                  href={`mailto:${CONTACT_EMAIL}`}
-                  variant="outline"
-                >
-                  Email us directly
-                </Button>
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
+                <CTAWithTrust trust={TRUST_COPY.contact}>
+                  <Button disabled>Send message (soon)</Button>
+                </CTAWithTrust>
+                <CTAWithTrust trust={TRUST_COPY.checklistEmail} className="sm:pt-0">
+                  <Button
+                    href={`mailto:${CONTACT_EMAIL}`}
+                    variant="outline"
+                  >
+                    Email us directly
+                  </Button>
+                </CTAWithTrust>
               </div>
             </form>
           </Card>
