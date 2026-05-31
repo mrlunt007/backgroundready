@@ -35,8 +35,6 @@ export function PreviewGridSection({
   cardVariant = "default",
   detailPagesEnabled = true,
 }: PreviewGridSectionProps) {
-  const CardComponent = cardVariant === "blog" ? BlogCard : PreviewCard;
-
   return (
     <Section id={id} variant={variant}>
       <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
@@ -50,18 +48,35 @@ export function PreviewGridSection({
         </Button>
       </div>
       <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {items.map((item) => (
-          <CardComponent
-            key={item.slug}
-            item={item}
-            href={
-              detailPagesEnabled
-                ? `${basePath}/${item.slug}`
-                : viewAllHref
-            }
-            linkLabel={detailPagesEnabled ? linkLabel : "Preview"}
-          />
-        ))}
+        {items.map((item) => {
+          const href = detailPagesEnabled
+            ? `${basePath}/${item.slug}`
+            : viewAllHref;
+
+          if (cardVariant === "blog") {
+            return (
+              <BlogCard
+                key={item.slug}
+                title={item.title}
+                description={item.description}
+                readingTime={item.meta ?? ""}
+                tag={item.badge === "Featured" ? undefined : item.badge}
+                featured={item.badge === "Featured"}
+                href={href}
+                linkLabel={detailPagesEnabled ? linkLabel : "Preview"}
+              />
+            );
+          }
+
+          return (
+            <PreviewCard
+              key={item.slug}
+              item={item}
+              href={href}
+              linkLabel={detailPagesEnabled ? linkLabel : "Preview"}
+            />
+          );
+        })}
       </div>
       {!detailPagesEnabled ? (
         <p className="mt-8 text-center text-sm text-slate-500">

@@ -7,6 +7,12 @@ type CreateMetadataOptions = {
   path: string;
   seoTitle?: string;
   seoDescription?: string;
+  canonicalUrl?: string;
+  type?: "website" | "article";
+  publishedTime?: string;
+  modifiedTime?: string;
+  authors?: string[];
+  tags?: string[];
 };
 
 export function createMetadata({
@@ -15,22 +21,37 @@ export function createMetadata({
   path,
   seoTitle,
   seoDescription,
+  canonicalUrl,
+  type = "website",
+  publishedTime,
+  modifiedTime,
+  authors,
+  tags,
 }: CreateMetadataOptions): Metadata {
   const resolvedTitle = seoTitle ?? title;
   const resolvedDescription = seoDescription ?? description;
+  const url = canonicalUrl ?? `${SITE_URL}${path}`;
 
   return {
     title: resolvedTitle,
     description: resolvedDescription,
     alternates: {
-      canonical: `${SITE_URL}${path}`,
+      canonical: url,
     },
     openGraph: {
       title: `${resolvedTitle} | ${SITE_NAME}`,
       description: resolvedDescription,
-      url: `${SITE_URL}${path}`,
+      url,
       siteName: SITE_NAME,
-      type: "website",
+      type,
+      ...(type === "article"
+        ? {
+            publishedTime,
+            modifiedTime,
+            authors,
+            tags,
+          }
+        : {}),
     },
     twitter: {
       card: "summary_large_image",

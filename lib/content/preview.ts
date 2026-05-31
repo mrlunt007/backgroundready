@@ -16,7 +16,7 @@ export function blogPostToPreviewItem(post: BlogPost): PreviewItem {
     title: post.title,
     description: post.description,
     meta: post.readingTime,
-    badge: post.featured ? "Featured" : post.category,
+    badge: post.featured ? "Featured" : post.tags[0] ?? post.category,
   };
 }
 

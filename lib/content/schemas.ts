@@ -17,12 +17,15 @@ const pricingTierSchema = z.object({
   features: z.array(z.string()).default([]),
 });
 
-export const blogPostFrontmatterSchema = z.object({
+const blogPostFrontmatterInputSchema = z.object({
   title: z.string(),
-  slug: z.string(),
+  slug: z.string().optional(),
   description: z.string(),
-  publishedAt: z.string(),
+  date: z.string().optional(),
+  publishedAt: z.string().optional(),
+  lastUpdated: z.string().optional(),
   updatedAt: z.string().optional(),
+  readTime: z.string().optional(),
   author: authorSchema.optional(),
   category: z.string().default("General"),
   tags: z.array(z.string()).default([]),
@@ -30,7 +33,34 @@ export const blogPostFrontmatterSchema = z.object({
   draft: z.boolean().default(false),
   seoTitle: z.string().optional(),
   seoDescription: z.string().optional(),
+  canonicalUrl: z.string().url().optional(),
 });
+
+export const blogPostFrontmatterSchema = blogPostFrontmatterInputSchema.transform(
+  (data) => {
+    const date = data.date ?? data.publishedAt;
+    if (!date) {
+      throw new Error("Blog post requires a date or publishedAt field");
+    }
+
+    return {
+      title: data.title,
+      slug: data.slug,
+      description: data.description,
+      date,
+      lastUpdated: data.lastUpdated ?? data.updatedAt,
+      readTime: data.readTime,
+      author: data.author,
+      category: data.category,
+      tags: data.tags,
+      featured: data.featured,
+      draft: data.draft,
+      seoTitle: data.seoTitle,
+      seoDescription: data.seoDescription,
+      canonicalUrl: data.canonicalUrl,
+    };
+  },
+);
 
 export const productFrontmatterSchema = z.object({
   title: z.string(),
