@@ -13,10 +13,9 @@ export type NavLink = {
 };
 
 export const NAV_LINKS: NavLink[] = [
-  { label: "Verification", href: "/#verification" },
-  { label: "Approach", href: "/#philosophy" },
+  { label: "Verification", href: "/verification" },
+  { label: "Approach", href: "/approach" },
   { label: "Blog", href: "/blog" },
-  { label: "Services", href: "/services" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -26,8 +25,8 @@ export const PRIMARY_CTA = {
 };
 
 export const SECONDARY_CTA = {
-  label: "Explore services",
-  href: "/services",
+  label: "Contact us",
+  href: "/contact",
 };
 
 export const CONTACT_EMAIL = "hello@backgroundready.com";

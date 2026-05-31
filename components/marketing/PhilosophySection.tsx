@@ -3,7 +3,6 @@ import { CTAWithTrust } from "@/components/ui/CTAWithTrust";
 import { ContentImage } from "@/components/ui/ContentImage";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { PRIMARY_CTA } from "@/lib/constants";
 import { IMAGES } from "@/lib/images";
 import { TRUST_COPY } from "@/lib/trust-copy";
 
@@ -22,17 +21,28 @@ const principles = [
   },
 ];
 
-export function PhilosophySection() {
+type PhilosophySectionProps = {
+  hideHeading?: boolean;
+};
+
+export function PhilosophySection({ hideHeading = false }: PhilosophySectionProps) {
   return (
-    <Section id="philosophy">
+    <Section>
       <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <div>
-          <SectionHeading
-            eyebrow="Our approach"
-            title="Qualified candidates deserve a fair shot at verification"
-            description="Hiring filters are rigid. Background checks are slow. That combination screens out capable people who simply were not ready—not people who lied."
-          />
-          <ul className="mt-8 space-y-5">
+          {!hideHeading ? (
+            <SectionHeading
+              eyebrow="Our approach"
+              title="Qualified candidates deserve a fair shot at verification"
+              description="Hiring filters are rigid. Background checks are slow. That combination screens out capable people who simply were not ready—not people who lied."
+            />
+          ) : (
+            <p className="text-lg leading-relaxed text-slate-600">
+              We believe capable people get screened out by rigid systems—not because
+              they lack skills. Here is how we think about verification prep.
+            </p>
+          )}
+          <ul className={hideHeading ? "space-y-5" : "mt-8 space-y-5"}>
             {principles.map((item) => (
               <li
                 key={item.label}
@@ -47,9 +57,9 @@ export function PhilosophySection() {
               </li>
             ))}
           </ul>
-          <CTAWithTrust trust={TRUST_COPY.hero} className="mt-8">
-            <Button href={PRIMARY_CTA.href} size="lg">
-              {PRIMARY_CTA.label}
+          <CTAWithTrust trust={TRUST_COPY.contact} className="mt-8">
+            <Button href="/contact" size="lg">
+              Contact us
             </Button>
           </CTAWithTrust>
         </div>

@@ -2,18 +2,14 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { ContentImage } from "@/components/ui/ContentImage";
 import { CTAWithTrust } from "@/components/ui/CTAWithTrust";
-import {
-  PRIMARY_CTA,
-  SECONDARY_CTA,
-  SITE_NAME,
-} from "@/lib/constants";
+import { SITE_NAME } from "@/lib/constants";
 import { IMAGES } from "@/lib/images";
 import { TRUST_COPY } from "@/lib/trust-copy";
 
 const trustPoints = [
-  "Built for real work history—not resume fiction",
-  "Guides on gaps, contracts, and reference prep",
-  "Free checklist to start before screening begins",
+  "Employment verification support for real work history",
+  "Expertise in contract, agency, and gap scenarios",
+  "Get verified before screening stalls your offer",
 ];
 
 export function HeroSection() {
@@ -27,18 +23,17 @@ export function HeroSection() {
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="text-center lg:text-left">
             <p className="inline-flex items-center rounded-full border border-[var(--brand-border)] bg-[var(--brand-subtle)] px-4 py-1.5 text-sm font-medium text-[var(--brand-primary-dark)]">
-              Passing employment verification
+              Get verified. Get hired.
             </p>
             <h1 className="mt-6 text-4xl font-semibold tracking-tight text-navy-900 sm:text-5xl lg:text-[3.25rem] lg:leading-[1.08]">
-              Get past the background check{" "}
+              We can help you{" "}
               <span className="text-[var(--brand-primary-dark)]">
-                with a story that holds up
+                pass employment verification
               </span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600 sm:text-xl lg:mx-0 mx-auto">
-              {SITE_NAME} helps job seekers organize real work history, explain gaps
-              honestly, and align references—so employment verification confirms
-              what you already know is true.
+              {SITE_NAME} helps job seekers get past background checks and employment
+              verification—so you can move from offer to start date without delays.
             </p>
 
             <ul className="mt-8 space-y-3 text-left lg:mx-0 mx-auto max-w-md lg:max-w-none">
@@ -60,21 +55,21 @@ export function HeroSection() {
 
             <div className="mt-10 flex flex-col items-stretch gap-5 sm:flex-row sm:items-start sm:gap-8 lg:justify-start">
               <CTAWithTrust
+                trust={TRUST_COPY.contact}
+                trustAlign="center"
+                className="sm:text-left lg:[&_p]:text-left [&_p]:text-center"
+              >
+                <Button href="/contact" size="lg" className="w-full sm:w-auto">
+                  Contact us
+                </Button>
+              </CTAWithTrust>
+              <CTAWithTrust
                 trust={TRUST_COPY.hero}
                 trustAlign="center"
                 className="sm:text-left lg:[&_p]:text-left [&_p]:text-center"
               >
-                <Button href={PRIMARY_CTA.href} size="lg" className="w-full sm:w-auto">
-                  {PRIMARY_CTA.label}
-                </Button>
-              </CTAWithTrust>
-              <CTAWithTrust
-                trust={TRUST_COPY.service}
-                trustAlign="center"
-                className="sm:text-left lg:[&_p]:text-left [&_p]:text-center"
-              >
-                <Button href={SECONDARY_CTA.href} variant="outline" size="lg" className="w-full sm:w-auto">
-                  {SECONDARY_CTA.label}
+                <Button href="/verification" variant="outline" size="lg" className="w-full sm:w-auto">
+                  How verification works
                 </Button>
               </CTAWithTrust>
             </div>
@@ -89,9 +84,9 @@ export function HeroSection() {
               sizes="(max-width: 1024px) 100vw, 560px"
             />
             <div className="absolute -bottom-4 -left-2 hidden max-w-[12rem] rounded-xl border border-slate-200/90 bg-white p-3 shadow-lg shadow-slate-900/10 sm:block lg:-left-6">
-              <p className="text-xs font-semibold text-navy-900">Screening-ready</p>
+              <p className="text-xs font-semibold text-navy-900">Verified &amp; ready</p>
               <p className="mt-1 text-xs leading-snug text-slate-500">
-                One timeline. Aligned references. Calm, honest answers.
+                Pass screening. Keep your offer. Start the job.
               </p>
             </div>
           </div>

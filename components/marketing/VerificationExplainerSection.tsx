@@ -23,7 +23,7 @@ const verificationFacts = [
 
 export function VerificationExplainerSection() {
   return (
-    <Section id="verification" variant="offWhite">
+    <Section variant="offWhite">
       <SectionHeading
         eyebrow="How verification works"
         title="Where employment checks actually go"

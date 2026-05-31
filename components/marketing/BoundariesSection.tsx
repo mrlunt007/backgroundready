@@ -3,11 +3,6 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 
 const boundaries = [
   {
-    title: "Fabricated employment",
-    description:
-      "We do not help you claim work at companies you never worked for, invent titles, or create false references.",
-  },
-  {
     title: "Government & clearance checks",
     description:
       "Our resources are not designed for federal background investigations, security clearances, or government-contractor screening.",
@@ -34,7 +29,7 @@ export function BoundariesSection() {
         align="center"
         className="mx-auto"
       />
-      <div className="mx-auto mt-12 grid max-w-4xl gap-4 sm:grid-cols-2">
+      <div className="mx-auto mt-12 grid max-w-4xl gap-4 md:grid-cols-3">
         {boundaries.map((item) => (
           <div
             key={item.title}

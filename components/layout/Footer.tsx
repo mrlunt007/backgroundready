@@ -63,7 +63,10 @@ export function Footer() {
               <p className="text-sm font-semibold text-white">Company</p>
               <ul className="mt-4 space-y-3">
                 {NAV_LINKS.filter(
-                  (l) => l.label === "About" || l.label === "Contact",
+                  (l) =>
+                    l.label === "Verification" ||
+                    l.label === "Approach" ||
+                    l.label === "Contact",
                 ).map((link) => (
                   <li key={link.href}>
                     <Link
