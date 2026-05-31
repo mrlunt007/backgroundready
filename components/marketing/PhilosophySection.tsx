@@ -23,17 +23,25 @@ const principles = [
 
 type PhilosophySectionProps = {
   hideHeading?: boolean;
+  hideImage?: boolean;
   imageKey?: SiteImageKey;
 };
 
 export function PhilosophySection({
   hideHeading = false,
+  hideImage = false,
   imageKey = "officeCollaboration",
 }: PhilosophySectionProps) {
   const sectionImage = IMAGES[imageKey];
   return (
     <Section>
-      <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <div
+        className={
+          hideImage
+            ? "mx-auto max-w-3xl"
+            : "grid items-center gap-12 lg:grid-cols-2 lg:gap-16"
+        }
+      >
         <div>
           {!hideHeading ? (
             <SectionHeading
@@ -68,12 +76,14 @@ export function PhilosophySection({
             </Button>
           </CTAWithTrust>
         </div>
-        <ContentImage
-          src={sectionImage.src}
-          alt={sectionImage.alt}
-          aspect="wide"
-          sizes="(max-width: 1024px) 100vw, 520px"
-        />
+        {!hideImage ? (
+          <ContentImage
+            src={sectionImage.src}
+            alt={sectionImage.alt}
+            aspect="wide"
+            sizes="(max-width: 1024px) 100vw, 520px"
+          />
+        ) : null}
       </div>
     </Section>
   );

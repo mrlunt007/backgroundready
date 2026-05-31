@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { CTASection } from "@/components/marketing/CTASection";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { PhilosophySection } from "@/components/marketing/PhilosophySection";
-import { OutcomeSection } from "@/components/marketing/OutcomeSection";
 import { IMAGES } from "@/lib/images";
 import { createMetadata } from "@/lib/seo/metadata";
 
@@ -23,13 +22,12 @@ export default function ApproachPage() {
         description="Hiring filters are rigid. Background checks are slow. We help capable people get organized—not people who need to invent a history."
         align="split"
         image={{
-          src: IMAGES.officeAtrium.src,
-          alt: IMAGES.officeAtrium.alt,
+          src: IMAGES.reviewingDocuments.src,
+          alt: IMAGES.reviewingDocuments.alt,
           aspect: "wide",
         }}
       />
-      <PhilosophySection hideHeading imageKey="reviewingDocuments" />
-      <OutcomeSection />
+      <PhilosophySection hideHeading hideImage />
       <CTASection
         title="Talk to us about your situation"
         description="Every career path is different. Contact us and we'll explain how our approach applies to yours."
