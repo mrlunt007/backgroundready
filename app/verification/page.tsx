@@ -3,7 +3,7 @@ import { CTASection } from "@/components/marketing/CTASection";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { VerificationExplainerSection } from "@/components/marketing/VerificationExplainerSection";
 import { VerificationHelpSection } from "@/components/marketing/VerificationHelpSection";
-import { IMAGES } from "@/lib/images";
+import { VIDEOS } from "@/lib/images";
 import { createMetadata } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = createMetadata({
@@ -15,6 +15,8 @@ export const metadata: Metadata = createMetadata({
 });
 
 export default function VerificationPage() {
+  const typingVideo = VIDEOS.typingOnLaptop;
+
   return (
     <>
       <PageHeader
@@ -22,9 +24,10 @@ export default function VerificationPage() {
         title="How employment verification works—and how we help"
         description="Most checks don't go where you expect. Understanding the process is the first step to getting verified without delays."
         align="split"
-        image={{
-          src: IMAGES.laptopWorking.src,
-          alt: IMAGES.laptopWorking.alt,
+        video={{
+          src: typingVideo.src,
+          alt: typingVideo.alt,
+          poster: typingVideo.poster,
           aspect: "portrait",
         }}
       />

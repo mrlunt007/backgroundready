@@ -1,4 +1,5 @@
 import { ContentImage } from "@/components/ui/ContentImage";
+import { ContentVideo } from "@/components/ui/ContentVideo";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/utils";
 
@@ -9,12 +10,20 @@ type PageHeaderImage = {
   aspect?: "video" | "portrait" | "wide" | "square";
 };
 
+type PageHeaderVideo = {
+  src: string;
+  alt: string;
+  poster?: string;
+  aspect?: "video" | "portrait" | "wide" | "square";
+};
+
 type PageHeaderProps = {
   eyebrow?: string;
   title: string;
   description?: string;
   children?: React.ReactNode;
   image?: PageHeaderImage;
+  video?: PageHeaderVideo;
   align?: "center" | "split";
 };
 
@@ -24,9 +33,11 @@ export function PageHeader({
   description,
   children,
   image,
+  video,
   align = "center",
 }: PageHeaderProps) {
-  const isSplit = align === "split" && image;
+  const isSplit = align === "split" && (image || video);
+  const mediaAspect = video?.aspect ?? image?.aspect ?? "portrait";
 
   return (
     <div className="border-b border-slate-100 bg-gradient-to-b from-slate-50 to-white">
@@ -69,12 +80,20 @@ export function PageHeader({
             ) : null}
           </div>
 
-          {isSplit ? (
+          {isSplit && video ? (
+            <ContentVideo
+              src={video.src}
+              alt={video.alt}
+              poster={video.poster}
+              aspect={mediaAspect}
+            />
+          ) : null}
+          {isSplit && image && !video ? (
             <ContentImage
               src={image.src}
               alt={image.alt}
               priority={image.priority}
-              aspect={image.aspect ?? "portrait"}
+              aspect={mediaAspect}
               sizes="(max-width: 1024px) 100vw, 480px"
             />
           ) : null}

@@ -3,7 +3,7 @@ import { CTAWithTrust } from "@/components/ui/CTAWithTrust";
 import { ContentImage } from "@/components/ui/ContentImage";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { IMAGES } from "@/lib/images";
+import { IMAGES, type SiteImageKey } from "@/lib/images";
 import { TRUST_COPY } from "@/lib/trust-copy";
 
 const principles = [
@@ -23,9 +23,14 @@ const principles = [
 
 type PhilosophySectionProps = {
   hideHeading?: boolean;
+  imageKey?: SiteImageKey;
 };
 
-export function PhilosophySection({ hideHeading = false }: PhilosophySectionProps) {
+export function PhilosophySection({
+  hideHeading = false,
+  imageKey = "officeCollaboration",
+}: PhilosophySectionProps) {
+  const sectionImage = IMAGES[imageKey];
   return (
     <Section>
       <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
@@ -64,8 +69,8 @@ export function PhilosophySection({ hideHeading = false }: PhilosophySectionProp
           </CTAWithTrust>
         </div>
         <ContentImage
-          src={IMAGES.officeCollaboration.src}
-          alt={IMAGES.officeCollaboration.alt}
+          src={sectionImage.src}
+          alt={sectionImage.alt}
           aspect="wide"
           sizes="(max-width: 1024px) 100vw, 520px"
         />

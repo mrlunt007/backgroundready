@@ -23,12 +23,12 @@ export default function ApproachPage() {
         description="Hiring filters are rigid. Background checks are slow. We help capable people get organized—not people who need to invent a history."
         align="split"
         image={{
-          src: IMAGES.officeCollaboration.src,
-          alt: IMAGES.officeCollaboration.alt,
+          src: IMAGES.officeAtrium.src,
+          alt: IMAGES.officeAtrium.alt,
           aspect: "wide",
         }}
       />
-      <PhilosophySection hideHeading />
+      <PhilosophySection hideHeading imageKey="reviewingDocuments" />
       <OutcomeSection />
       <CTASection
         title="Talk to us about your situation"

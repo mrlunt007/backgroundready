@@ -35,4 +35,13 @@ export const IMAGES = {
   },
 } as const;
 
+export const VIDEOS = {
+  typingOnLaptop: {
+    src: "/videos/typing-vid.mp4",
+    alt: "Close-up of hands typing on a laptop keyboard while working",
+    poster: "/images/laptop-working.png",
+  },
+} as const;
+
 export type SiteImageKey = keyof typeof IMAGES;
+export type SiteVideoKey = keyof typeof VIDEOS;
