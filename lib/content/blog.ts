@@ -1,7 +1,7 @@
-import readingTime from "reading-time";
 import { compileMdxBody } from "@/lib/content/compile-mdx";
 import { extractHeadings } from "@/lib/content/extract-headings";
 import { injectBlogInlineCTA } from "@/lib/content/inject-blog-cta";
+import { readingTimeFromText } from "@/lib/content/reading-time-display";
 import {
   isVisibleInProduction,
   listMdxFiles,
@@ -22,7 +22,6 @@ function loadBlogPostMeta(filename: string): BlogPost | null {
   if (!isVisibleInProduction(parsed.draft)) return null;
 
   const slug = parsed.slug ?? slugFromFilename(filename);
-  const stats = readingTime(content);
 
   return {
     title: parsed.title,
@@ -38,7 +37,7 @@ function loadBlogPostMeta(filename: string): BlogPost | null {
     seoTitle: parsed.seoTitle,
     seoDescription: parsed.seoDescription,
     canonicalUrl: parsed.canonicalUrl,
-    readingTime: parsed.readTime ?? stats.text,
+    readingTime: parsed.readTime ?? readingTimeFromText(content),
   };
 }
 

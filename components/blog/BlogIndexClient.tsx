@@ -17,21 +17,14 @@ export function BlogIndexClient({ posts, tags }: BlogIndexClientProps) {
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [page, setPage] = useState(1);
 
-  const featuredPosts = useMemo(
-    () => posts.filter((post) => post.featured),
-    [posts],
-  );
-
-  const filteredPosts = useMemo(() => {
-    if (!activeTag) return posts.filter((post) => !post.featured);
-    return posts.filter(
-      (post) => !post.featured && post.tags.some((tag) => tag === activeTag),
-    );
+  const visiblePosts = useMemo(() => {
+    if (!activeTag) return posts;
+    return posts.filter((post) => post.tags.some((tag) => tag === activeTag));
   }, [activeTag, posts]);
 
-  const totalPages = Math.max(1, Math.ceil(filteredPosts.length / POSTS_PER_PAGE));
+  const totalPages = Math.max(1, Math.ceil(visiblePosts.length / POSTS_PER_PAGE));
   const currentPage = Math.min(page, totalPages);
-  const paginatedPosts = filteredPosts.slice(
+  const paginatedPosts = visiblePosts.slice(
     (currentPage - 1) * POSTS_PER_PAGE,
     currentPage * POSTS_PER_PAGE,
   );
@@ -75,41 +68,18 @@ export function BlogIndexClient({ posts, tags }: BlogIndexClientProps) {
         </div>
       ) : null}
 
-      {!activeTag && featuredPosts.length > 0 ? (
-        <section>
+      <section>
+        {!activeTag ? (
           <SectionHeading
             eyebrow="Start here"
             title="Essential reads"
             description="Featured guides for background checks, gaps, and verification prep."
           />
-          <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {featuredPosts.map((post) => (
-              <BlogCard
-                key={post.slug}
-                title={post.title}
-                description={post.description}
-                readingTime={post.readingTime}
-                tag={post.tags[0]}
-                featured
-                href={`/blog/${post.slug}`}
-              />
-            ))}
-          </div>
-        </section>
-      ) : null}
-
-      <section>
-        {!activeTag ? (
-          <SectionHeading
-            eyebrow="All articles"
-            title="More from the blog"
-            description="Browse every guide, sorted by publish date."
-          />
         ) : (
           <SectionHeading
             eyebrow="Filtered"
             title={`Articles tagged “${activeTag}”`}
-            description={`${filteredPosts.length} article${filteredPosts.length === 1 ? "" : "s"} found.`}
+            description={`${visiblePosts.length} article${visiblePosts.length === 1 ? "" : "s"} found.`}
           />
         )}
 
@@ -122,6 +92,7 @@ export function BlogIndexClient({ posts, tags }: BlogIndexClientProps) {
                 description={post.description}
                 readingTime={post.readingTime}
                 tag={post.tags[0]}
+                featured={post.featured}
                 href={`/blog/${post.slug}`}
               />
             ))}
@@ -132,7 +103,7 @@ export function BlogIndexClient({ posts, tags }: BlogIndexClientProps) {
           </p>
         )}
 
-        {filteredPosts.length > POSTS_PER_PAGE ? (
+        {visiblePosts.length > POSTS_PER_PAGE ? (
           <div className="mt-10 flex items-center justify-center gap-3">
             <button
               type="button"

@@ -4,6 +4,10 @@ export function injectBlogInlineCTA(
   source: string,
   afterParagraph = 3,
 ): string {
+  if (source.includes("<BlogInlineCTA")) {
+    return source;
+  }
+
   const blocks = source.split(/\n\n+/).filter((block) => block.trim().length > 0);
 
   if (blocks.length <= afterParagraph) {
