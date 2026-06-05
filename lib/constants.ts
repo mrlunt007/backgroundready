@@ -30,3 +30,7 @@ export const SECONDARY_CTA = {
 };
 
 export const CONTACT_EMAIL = "contact@backgroundready.com";
+
+export const CONTACT_MAILTO_SUBJECT = "Question for BackgroundReady";
+
+export const CONTACT_MAILTO_HREF = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(CONTACT_MAILTO_SUBJECT)}`;
