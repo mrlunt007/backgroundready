@@ -1,15 +1,6 @@
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/constants";
 
 export function HomeJsonLd() {
-  const organization = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: SITE_NAME,
-    url: SITE_URL,
-    description: SITE_DESCRIPTION,
-    sameAs: [],
-  };
-
   const website = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -56,10 +47,6 @@ export function HomeJsonLd() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
-      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }}

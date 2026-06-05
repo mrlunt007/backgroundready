@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { ContactEmailLink } from "@/components/ui/ContactEmailLink";
 import { Container } from "@/components/ui/Container";
 import { CTAWithTrust } from "@/components/ui/CTAWithTrust";
 import {
-  CONTACT_EMAIL,
   NAV_LINKS,
   PRIMARY_CTA,
   SITE_DESCRIPTION,
@@ -84,12 +84,7 @@ export function Footer() {
               <p className="text-sm font-semibold text-white">Contact</p>
               <ul className="mt-4 space-y-3 text-sm text-slate-400">
                 <li>
-                  <a
-                    href={`mailto:${CONTACT_EMAIL}`}
-                    className="transition-colors hover:text-white"
-                  >
-                    {CONTACT_EMAIL}
-                  </a>
+                  <ContactEmailLink className="text-slate-400 decoration-slate-600 hover:text-white" />
                 </li>
               </ul>
             </div>

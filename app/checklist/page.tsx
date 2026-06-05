@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { TrustMicroCopy } from "@/components/ui/TrustMicroCopy";
 import { Section } from "@/components/ui/Section";
+import { ContactEmailLink } from "@/components/ui/ContactEmailLink";
 import { PRIMARY_CTA, SITE_NAME } from "@/lib/constants";
 import { IMAGES } from "@/lib/images";
 import { TRUST_COPY } from "@/lib/trust-copy";
@@ -125,7 +126,8 @@ export default function ChecklistPage() {
             </div>
             <p className="mt-4 text-xs text-slate-500">
               By signing up, you agree to receive emails from {SITE_NAME}. Unsubscribe
-              anytime.
+              anytime. Questions?{" "}
+              <ContactEmailLink className="text-xs font-medium" />.
             </p>
           </Card>
         </div>

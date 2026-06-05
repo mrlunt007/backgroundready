@@ -3,6 +3,7 @@ import { CTASection } from "@/components/marketing/CTASection";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { Section } from "@/components/ui/Section";
+import { ContactEmailLink } from "@/components/ui/ContactEmailLink";
 import { SITE_NAME } from "@/lib/constants";
 import { ContentImage } from "@/components/ui/ContentImage";
 import { ABOUT_VALUES } from "@/lib/placeholders";
@@ -62,6 +63,14 @@ export default function AboutPage() {
         </div>
 
         <Card className="mx-auto mt-12 max-w-3xl border-brand-100 bg-brand-50/50">
+          <p className="text-sm font-semibold text-navy-900">Questions for our team?</p>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+            We&apos;re happy to hear from you about our guides, products, or services.
+            Email us at <ContactEmailLink className="text-sm" />.
+          </p>
+        </Card>
+
+        <Card className="mx-auto mt-6 max-w-3xl">
           <p className="text-sm font-semibold text-navy-900">Important note</p>
           <p className="mt-2 text-sm leading-relaxed text-slate-600">
             Content on {SITE_NAME} is for general educational purposes only and is

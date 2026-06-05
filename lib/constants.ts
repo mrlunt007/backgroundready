@@ -29,4 +29,4 @@ export const SECONDARY_CTA = {
   href: "/contact",
 };
 
-export const CONTACT_EMAIL = "hello@backgroundready.com";
+export const CONTACT_EMAIL = "contact@backgroundready.com";

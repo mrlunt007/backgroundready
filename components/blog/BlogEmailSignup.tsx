@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/Button";
+import { ContactEmailLink } from "@/components/ui/ContactEmailLink";
 import { Input } from "@/components/ui/Input";
 import { TrustMicroCopy } from "@/components/ui/TrustMicroCopy";
 import { Section } from "@/components/ui/Section";
@@ -35,6 +36,9 @@ export function BlogEmailSignup() {
           </Button>
         </form>
         <TrustMicroCopy className="mt-3">{TRUST_COPY.checklistEmail}</TrustMicroCopy>
+        <p className="mt-4 text-sm text-slate-600">
+          Questions? Reach us at <ContactEmailLink className="text-sm font-medium" />.
+        </p>
       </div>
     </Section>
   );

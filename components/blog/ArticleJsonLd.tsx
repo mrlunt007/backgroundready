@@ -1,4 +1,4 @@
-import { SITE_NAME, SITE_URL } from "@/lib/constants";
+import { CONTACT_EMAIL, SITE_NAME, SITE_URL } from "@/lib/constants";
 import type { BlogPost } from "@/types/blog";
 
 type ArticleJsonLdProps = {
@@ -22,11 +22,13 @@ export function ArticleJsonLd({ post }: ArticleJsonLdProps) {
       : {
           "@type": "Organization",
           name: SITE_NAME,
+          email: CONTACT_EMAIL,
         },
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
       url: SITE_URL,
+      email: CONTACT_EMAIL,
     },
     mainEntityOfPage: {
       "@type": "WebPage",
