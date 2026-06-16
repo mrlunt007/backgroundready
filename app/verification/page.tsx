@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CTASection } from "@/components/marketing/CTASection";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { VerificationExplainerSection } from "@/components/marketing/VerificationExplainerSection";
+import { VerificationFreezeServiceSection } from "@/components/marketing/VerificationFreezeServiceSection";
 import { VerificationHelpSection } from "@/components/marketing/VerificationHelpSection";
 import { VIDEOS } from "@/lib/images";
 import { createMetadata } from "@/lib/seo/metadata";
@@ -27,11 +28,11 @@ export default function VerificationPage() {
         video={{
           src: typingVideo.src,
           alt: typingVideo.alt,
-          poster: typingVideo.poster,
           aspect: "portrait",
         }}
       />
       <VerificationExplainerSection />
+      <VerificationFreezeServiceSection />
       <VerificationHelpSection />
       <CTASection
         title="Ready to get verified?"

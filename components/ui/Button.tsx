@@ -66,13 +66,14 @@ export function Button(props: ButtonProps) {
   if ("href" in props && props.href) {
     const { href, external, ...linkProps } = props;
 
-    if (external) {
+    if (external || href.startsWith("mailto:")) {
       return (
         <a
           href={href}
           className={styles}
-          target="_blank"
-          rel="noopener noreferrer"
+          {...(external
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : {})}
           {...linkProps}
         >
           {children}

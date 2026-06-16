@@ -37,6 +37,7 @@ export function ContentVideo({
         muted
         loop
         playsInline
+        preload="auto"
         aria-label={alt}
         className="absolute inset-0 h-full w-full object-cover"
       />

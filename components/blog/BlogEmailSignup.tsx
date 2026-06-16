@@ -1,8 +1,7 @@
 import { Button } from "@/components/ui/Button";
 import { ContactEmailLink } from "@/components/ui/ContactEmailLink";
-import { Input } from "@/components/ui/Input";
-import { TrustMicroCopy } from "@/components/ui/TrustMicroCopy";
 import { Section } from "@/components/ui/Section";
+import { CONTACT_MAILTO_CHECKLIST_HREF } from "@/lib/constants";
 import { TRUST_COPY } from "@/lib/trust-copy";
 
 export function BlogEmailSignup() {
@@ -13,32 +12,19 @@ export function BlogEmailSignup() {
           Stay ready
         </p>
         <h2 className="mt-2 font-serif text-2xl font-semibold text-navy-900 sm:text-3xl">
-          Get screening tips in your inbox
+          Want the free checklist or have a question?
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-slate-600">
-          Practical background-check prep—no spam. Unsubscribe anytime.
+          Email us for the background-check readiness checklist, screening tips,
+          or help with your situation. We respond within two business days.
         </p>
-        <form
-          className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-end"
-          aria-label="Email signup (placeholder)"
-        >
-          <div className="flex-1">
-            <Input
-              label="Email address"
-              name="email"
-              type="email"
-              placeholder="you@example.com"
-              disabled
-            />
-          </div>
-          <Button disabled className="sm:mb-0.5">
-            Subscribe (soon)
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <Button href={CONTACT_MAILTO_CHECKLIST_HREF} size="lg">
+            Email for the checklist
           </Button>
-        </form>
-        <TrustMicroCopy className="mt-3">{TRUST_COPY.checklistEmail}</TrustMicroCopy>
-        <p className="mt-4 text-sm text-slate-600">
-          Questions? Reach us at <ContactEmailLink className="text-sm font-medium" />.
-        </p>
+          <ContactEmailLink withSubject className="text-center text-sm sm:px-4" />
+        </div>
+        <p className="mt-4 text-xs text-slate-500">{TRUST_COPY.checklistEmail}</p>
       </div>
     </Section>
   );

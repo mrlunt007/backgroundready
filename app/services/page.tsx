@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { CTASection } from "@/components/marketing/CTASection";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
+import { ContactEmailLink } from "@/components/ui/ContactEmailLink";
 import { CTAWithTrust } from "@/components/ui/CTAWithTrust";
 import { Card } from "@/components/ui/Card";
 import { PreviewCard } from "@/components/ui/PreviewCard";
@@ -95,10 +95,7 @@ export default function ServicesIndexPage() {
           ))}
         </div>
         <p className="mt-10 text-center text-sm text-slate-600">
-          Questions?{" "}
-          <Link href="/contact" className="font-semibold text-brand-700 hover:text-brand-800">
-            Contact {SITE_NAME}
-          </Link>
+          Questions? Email <ContactEmailLink className="text-sm" />.
         </p>
       </Section>
 

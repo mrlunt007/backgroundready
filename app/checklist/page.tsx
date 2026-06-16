@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { Input } from "@/components/ui/Input";
+import { ContactEmailLink } from "@/components/ui/ContactEmailLink";
 import { TrustMicroCopy } from "@/components/ui/TrustMicroCopy";
 import { Section } from "@/components/ui/Section";
-import { ContactEmailLink } from "@/components/ui/ContactEmailLink";
-import { PRIMARY_CTA, SITE_NAME } from "@/lib/constants";
+import { CONTACT_MAILTO_CHECKLIST_HREF, SITE_NAME } from "@/lib/constants";
 import { IMAGES } from "@/lib/images";
 import { TRUST_COPY } from "@/lib/trust-copy";
 
@@ -45,7 +44,7 @@ const checklistItems = [
 const benefits = [
   "Works whether you're employed, between jobs, or changing careers",
   "Designed for U.S.-style employment screening (general guidance)",
-  "Printable PDF format—coming when email capture launches",
+  "Printable PDF you can work through at your own pace",
 ];
 
 export default function ChecklistPage() {
@@ -103,31 +102,18 @@ export default function ChecklistPage() {
               Get the checklist
             </p>
             <p className="mt-2 text-sm text-slate-600">
-              Enter your email to receive the PDF when delivery goes live. No spam—just
-              readiness tips you can use.
+              Email us and we&apos;ll send you the PDF. No spam—just readiness
+              tips you can use.
             </p>
-            <div
-              className="mt-6 space-y-4"
-              role="group"
-              aria-label="Checklist signup (placeholder)"
-            >
-              <Input
-                label="Email address"
-                name="email"
-                type="email"
-                placeholder="you@example.com"
-                disabled
-              />
-              <TrustMicroCopy>{TRUST_COPY.checklistEmail}</TrustMicroCopy>
-              <Button disabled className="w-full" size="lg">
-                {PRIMARY_CTA.label} (soon)
+            <div className="mt-6 space-y-4">
+              <Button href={CONTACT_MAILTO_CHECKLIST_HREF} className="w-full" size="lg">
+                Email for the checklist
               </Button>
+              <ContactEmailLink withSubject className="block text-center text-sm" />
               <TrustMicroCopy>{TRUST_COPY.checklist}</TrustMicroCopy>
             </div>
             <p className="mt-4 text-xs text-slate-500">
-              By signing up, you agree to receive emails from {SITE_NAME}. Unsubscribe
-              anytime. Questions?{" "}
-              <ContactEmailLink className="text-xs font-medium" />.
+              Questions? <ContactEmailLink className="text-xs font-medium" />.
             </p>
           </Card>
         </div>

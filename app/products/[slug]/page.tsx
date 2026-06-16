@@ -14,7 +14,11 @@ import {
   getProductBySlug,
   getProductWithContent,
 } from "@/lib/content/products";
+import {
+  contactMailtoForProduct,
+} from "@/lib/constants";
 import { createMetadata } from "@/lib/seo/metadata";
+import { ContactEmailLink } from "@/components/ui/ContactEmailLink";
 import { TRUST_COPY } from "@/lib/trust-copy";
 
 type PageProps = {
@@ -44,6 +48,8 @@ export default async function ProductPage({ params }: PageProps) {
   const product = await getProductWithContent(slug);
   if (!product) notFound();
 
+  const productMailto = contactMailtoForProduct(product.title);
+
   return (
     <>
       <div className="border-b border-slate-100 bg-gradient-to-b from-slate-50 to-white">
@@ -70,8 +76,8 @@ export default async function ProductPage({ params }: PageProps) {
             </p>
             <div className="mt-8 flex flex-wrap gap-6">
               <CTAWithTrust trust={TRUST_COPY.product}>
-                <Button href={product.gumroadUrl} external size="lg">
-                  Buy on Gumroad
+                <Button href={productMailto} size="lg">
+                  Email us to order
                 </Button>
               </CTAWithTrust>
               <CTAWithTrust trust={TRUST_COPY.checklist}>
@@ -105,16 +111,12 @@ export default async function ProductPage({ params }: PageProps) {
               ))}
             </ul>
             <CTAWithTrust trust={TRUST_COPY.product} className="mt-6">
-              <Button
-                href={product.gumroadUrl}
-                external
-                className="w-full"
-              >
-                Buy on Gumroad
+              <Button href={productMailto} className="w-full">
+                Email us to order
               </Button>
             </CTAWithTrust>
             <p className="mt-3 text-xs text-slate-500">
-              Placeholder checkout URL until Gumroad products are connected.
+              Questions? <ContactEmailLink className="text-xs font-medium" />.
             </p>
           </Card>
         </div>

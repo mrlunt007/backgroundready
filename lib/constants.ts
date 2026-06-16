@@ -34,3 +34,9 @@ export const CONTACT_EMAIL = "contact@backgroundready.com";
 export const CONTACT_MAILTO_SUBJECT = "Question for BackgroundReady";
 
 export const CONTACT_MAILTO_HREF = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(CONTACT_MAILTO_SUBJECT)}`;
+
+export const CONTACT_MAILTO_CHECKLIST_HREF = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Checklist request")}`;
+
+export function contactMailtoForProduct(productTitle: string): string {
+  return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Product inquiry: ${productTitle}`)}`;
+}

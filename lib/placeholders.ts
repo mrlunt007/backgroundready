@@ -69,12 +69,12 @@ export const FAQ_ITEMS: FAQItem[] = [
   {
     question: "Are products and services available now?",
     answer:
-      "We're launching in phases. The free checklist is the best place to start today; product and service pages show what's coming and how to get notified.",
+      "Yes. Email us at contact@backgroundready.com for services, digital products, and the free checklist. We respond within two business days.",
   },
   {
     question: "How is my email used for the checklist?",
     answer:
-      "We'll only use it to deliver the checklist and occasional readiness tips. You can unsubscribe anytime. Full privacy details will be published before launch.",
+      "We only use it to send the checklist and occasional readiness tips. You can unsubscribe anytime. We never share your data.",
   },
 ];
 

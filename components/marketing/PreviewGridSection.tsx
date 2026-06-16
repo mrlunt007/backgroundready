@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { BlogCard } from "@/components/marketing/BlogCard";
 import { PreviewCard } from "@/components/ui/PreviewCard";
@@ -78,14 +77,6 @@ export function PreviewGridSection({
           );
         })}
       </div>
-      {!detailPagesEnabled ? (
-        <p className="mt-8 text-center text-sm text-slate-500">
-          Detailed pages coming soon.{" "}
-          <Link href={viewAllHref} className="font-medium text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]">
-            Browse all {viewAllLabel.toLowerCase().replace("view all ", "")}
-          </Link>
-        </p>
-      ) : null}
     </Section>
   );
 }
