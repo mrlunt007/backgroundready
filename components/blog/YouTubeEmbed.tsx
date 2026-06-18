@@ -71,6 +71,11 @@ function buildEmbedSrc(id: string, start?: number): string {
   return `https://www.youtube-nocookie.com/embed/${id}${query ? `?${query}` : ""}`;
 }
 
+function isNearViewport(element: HTMLElement, rootMarginPx = 240): boolean {
+  const rect = element.getBoundingClientRect();
+  return rect.top < window.innerHeight + rootMarginPx && rect.bottom > -rootMarginPx;
+}
+
 export function YouTubeEmbed({
   videoId,
   url,
@@ -87,6 +92,16 @@ export function YouTubeEmbed({
     const element = containerRef.current;
     if (!element) return;
 
+    const loadIfVisible = () => {
+      if (isNearViewport(element)) {
+        setShouldLoad(true);
+        return true;
+      }
+      return false;
+    };
+
+    if (loadIfVisible()) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -98,7 +113,24 @@ export function YouTubeEmbed({
     );
 
     observer.observe(element);
-    return () => observer.disconnect();
+
+    // Re-check after layout — IO can miss above-the-fold nodes on first paint.
+    const raf = window.requestAnimationFrame(() => {
+      if (loadIfVisible()) {
+        observer.disconnect();
+      }
+    });
+
+    const fallback = window.setTimeout(() => {
+      setShouldLoad(true);
+      observer.disconnect();
+    }, 4000);
+
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.clearTimeout(fallback);
+      observer.disconnect();
+    };
   }, []);
 
   const embedSrc = buildEmbedSrc(id, resolvedStart);
