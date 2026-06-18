@@ -1,6 +1,7 @@
 import { Children, isValidElement, type ReactNode } from "react";
 import type { MDXComponents } from "mdx/types";
 import { BlogInlineCTA } from "@/components/marketing/BlogInlineCTA";
+import { YouTubeEmbed } from "@/components/blog/YouTubeEmbed";
 import { slugifyHeading } from "@/lib/content/slugify";
 
 function getHeadingText(children: ReactNode): string {
@@ -42,6 +43,7 @@ function createHeadingComponent(level: 2 | 3) {
 
 export const mdxComponents: MDXComponents = {
   BlogInlineCTA,
+  YouTubeEmbed,
   h2: createHeadingComponent(2),
   h3: createHeadingComponent(3),
   p: (props) => (
