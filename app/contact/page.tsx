@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { ContactForm } from "@/components/marketing/ContactForm";
 import { ContactEmailLink } from "@/components/ui/ContactEmailLink";
 import { TrustMicroCopy } from "@/components/ui/TrustMicroCopy";
 import { Section } from "@/components/ui/Section";
@@ -39,7 +40,7 @@ export default function ContactPage() {
       <PageHeader
         eyebrow="Contact"
         title="Get in touch"
-        description="Email us directly and we'll respond within two business days."
+        description="Send a message and we'll respond within two business days."
         align="split"
         image={{
           src: IMAGES.handshakeOffer.src,
@@ -49,7 +50,7 @@ export default function ContactPage() {
       />
 
       <Section containerClassName="max-w-2xl">
-        <ContactEmailLink withSubject prominent className="w-full sm:w-auto" />
+        <ContactForm />
 
         <ul className="mt-10 space-y-3">
           {contactReasons.map((reason) => (
@@ -63,12 +64,11 @@ export default function ContactPage() {
         </ul>
 
         <p className="mt-6 text-sm text-slate-500">
-          For checklist or product issues, include your download email so we can
-          find your account faster.
+          Prefer email? <ContactEmailLink withSubject />
         </p>
 
         <TrustMicroCopy className="mt-10 border-t border-slate-100 pt-8">
-          {TRUST_COPY.checklistEmail}
+          {TRUST_COPY.contact}
         </TrustMicroCopy>
       </Section>
     </>
