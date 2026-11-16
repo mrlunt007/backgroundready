@@ -37,6 +37,17 @@ export const CONTACT_MAILTO_HREF = `mailto:${CONTACT_EMAIL}?subject=${encodeURIC
 
 export const CONTACT_MAILTO_CHECKLIST_HREF = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Checklist request")}`;
 
+/** Public path for the free checklist PDF (served from /public) */
+export const CHECKLIST_PDF_HREF = "/downloads/background-ready-free-checklist.pdf";
+
+export const CHECKLIST_PDF_FILENAME = "BackgroundReady-Free-Checklist.pdf";
+
+/** Kit (ConvertKit) inline form for checklist signup + PDF delivery */
+export const KIT_CHECKLIST_FORM = {
+  uid: "4923f4934a",
+  src: "https://backgroundready.kit.com/4923f4934a/index.js",
+} as const;
+
 export function contactMailtoForProduct(productTitle: string): string {
   return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Product inquiry: ${productTitle}`)}`;
 }

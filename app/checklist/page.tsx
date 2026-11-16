@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { Button } from "@/components/ui/Button";
+import { ChecklistSignupForm } from "@/components/marketing/ChecklistSignupForm";
 import { Card } from "@/components/ui/Card";
 import { ContactEmailLink } from "@/components/ui/ContactEmailLink";
-import { TrustMicroCopy } from "@/components/ui/TrustMicroCopy";
 import { Section } from "@/components/ui/Section";
-import { CONTACT_MAILTO_CHECKLIST_HREF, SITE_NAME } from "@/lib/constants";
+import { SITE_NAME } from "@/lib/constants";
 import { IMAGES } from "@/lib/images";
-import { TRUST_COPY } from "@/lib/trust-copy";
 
 export const metadata: Metadata = {
   title: "Free checklist",
@@ -102,15 +100,10 @@ export default function ChecklistPage() {
               Get the checklist
             </p>
             <p className="mt-2 text-sm text-slate-600">
-              Email us and we&apos;ll send you the PDF. No spam—just readiness
-              tips you can use.
+              Enter your email, confirm the message we send, and download the PDF.
             </p>
-            <div className="mt-6 space-y-4">
-              <Button href={CONTACT_MAILTO_CHECKLIST_HREF} className="w-full" size="lg">
-                Email for the checklist
-              </Button>
-              <ContactEmailLink withSubject className="block text-center text-sm" />
-              <TrustMicroCopy>{TRUST_COPY.checklist}</TrustMicroCopy>
+            <div className="mt-6">
+              <ChecklistSignupForm />
             </div>
             <p className="mt-4 text-xs text-slate-500">
               Questions? <ContactEmailLink className="text-xs font-medium" />.

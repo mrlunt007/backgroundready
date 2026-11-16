@@ -1,7 +1,6 @@
-import { Button } from "@/components/ui/Button";
+import { ChecklistSignupForm } from "@/components/marketing/ChecklistSignupForm";
 import { ContactEmailLink } from "@/components/ui/ContactEmailLink";
 import { Section } from "@/components/ui/Section";
-import { CONTACT_MAILTO_CHECKLIST_HREF } from "@/lib/constants";
 import { TRUST_COPY } from "@/lib/trust-copy";
 
 export function BlogEmailSignup() {
@@ -12,17 +11,15 @@ export function BlogEmailSignup() {
           Stay ready
         </p>
         <h2 className="mt-2 font-serif text-2xl font-semibold text-navy-900 sm:text-3xl">
-          Want the free checklist or have a question?
+          Want the free checklist?
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-slate-600">
-          Email us for the background-check readiness checklist, screening tips,
-          or help with your situation. We respond within two business days.
+          Enter your email and we&apos;ll send a confirmation with the
+          background-check readiness checklist PDF. Prefer to ask a question?{" "}
+          <ContactEmailLink withSubject className="text-sm" />
         </p>
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <Button href={CONTACT_MAILTO_CHECKLIST_HREF} size="lg">
-            Email for the checklist
-          </Button>
-          <ContactEmailLink withSubject className="text-center text-sm sm:px-4" />
+        <div className="mt-6">
+          <ChecklistSignupForm compact />
         </div>
         <p className="mt-4 text-xs text-slate-500">{TRUST_COPY.checklistEmail}</p>
       </div>

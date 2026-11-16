@@ -19,6 +19,8 @@ type ButtonAsLink = ButtonBaseProps &
   Omit<React.ComponentProps<typeof Link>, "href"> & {
     href: string;
     external?: boolean;
+    /** Force a native anchor (e.g. PDF download) */
+    download?: boolean | string;
   };
 
 export type ButtonProps = ButtonAsButton | ButtonAsLink;
@@ -64,15 +66,30 @@ export function Button(props: ButtonProps) {
   );
 
   if ("href" in props && props.href) {
-    const { href, external, ...linkProps } = props;
+    const {
+      href,
+      external,
+      download,
+      variant: _variant,
+      size: _size,
+      className: _className,
+      children: _children,
+      ...linkProps
+    } = props;
 
-    if (external || href.startsWith("mailto:")) {
+    if (external || download || href.startsWith("mailto:")) {
       return (
         <a
           href={href}
           className={styles}
           {...(external
             ? { target: "_blank", rel: "noopener noreferrer" }
+            : {})}
+          {...(download
+            ? {
+                download:
+                  typeof download === "string" ? download : true,
+              }
             : {})}
           {...linkProps}
         >

@@ -37,6 +37,14 @@ NEXT_PUBLIC_FORMSPREE_FORM_ID=your_form_id
 4. Set `NEXT_PUBLIC_FORMSPREE_FORM_ID` in `.env.local` and in Vercel → Project → Settings → Environment Variables.
 5. Submit a test from `/contact`; confirm the email arrives in Proton.
 
+### Free checklist signup (Kit)
+
+The `/checklist` page (and blog signup block) embed a Kit form that emails a confirmation with the PDF download.
+
+- Form UID / script: see `KIT_CHECKLIST_FORM` in `lib/constants.ts`
+- PDF is also hosted at `/downloads/background-ready-free-checklist.pdf` for Kit confirmation delivery and backup access
+- Contact form stays on Formspree (`NEXT_PUBLIC_FORMSPREE_FORM_ID`) — keep list signup and contact separate
+
 ## Project structure
 
 - `app/` — routes and layouts
