@@ -83,3 +83,18 @@ h3 {
   position: relative;
   z-index: 1;
 }
+
+/* Kit checklist form — keep embed tidy inside our cards */
+.kit-form {
+  width: 100%;
+}
+
+.kit-form form,
+.kit-form .formkit-form {
+  margin-inline: auto;
+  max-width: 100%;
+}
+
+.kit-form .formkit-submit {
+  width: 100%;
+}
