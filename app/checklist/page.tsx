@@ -48,19 +48,19 @@ export default function ChecklistPage() {
     <>
       <section className="border-b border-slate-100 bg-gradient-to-b from-brand-50/70 via-white to-white">
         <Container className="py-12 sm:py-16 lg:py-20">
-          <div className="mx-auto max-w-2xl text-center">
+          <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-brand-700">
               Free resource
             </p>
             <h1 className="mt-3 text-3xl font-bold tracking-tight text-navy-900 sm:text-4xl lg:text-5xl">
               Get the free background-check checklist
             </h1>
-            <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-600">
+            <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
               Enter your email, confirm the message we send, and download the
               PDF—so you&apos;re organized before HR starts screening.
             </p>
 
-            <Card className="mx-auto mt-8 w-full max-w-md border-brand-200/70 bg-white p-6 text-left shadow-md shadow-brand-500/10 sm:p-8">
+            <Card className="mx-auto mt-8 w-full max-w-2xl border-brand-200/70 bg-white p-6 text-left shadow-md shadow-brand-500/10 sm:p-8 lg:p-10">
               <p className="text-center text-sm font-semibold uppercase tracking-wide text-brand-700">
                 Email signup
               </p>

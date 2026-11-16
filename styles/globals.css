@@ -84,17 +84,27 @@ h3 {
   z-index: 1;
 }
 
-/* Kit checklist form — keep embed tidy inside our cards */
+/* Kit checklist form — stretch embed to the card width */
 .kit-form {
   width: 100%;
 }
 
 .kit-form form,
-.kit-form .formkit-form {
-  margin-inline: auto;
-  max-width: 100%;
+.kit-form .formkit-form,
+.kit-form [data-element="form"] {
+  margin-inline: auto !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.kit-form .formkit-fields,
+.kit-form .formkit-field,
+.kit-form input,
+.kit-form .formkit-input {
+  max-width: 100% !important;
+  width: 100% !important;
 }
 
 .kit-form .formkit-submit {
-  width: 100%;
+  width: 100% !important;
 }
