@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { TrustMicroCopy } from "@/components/ui/TrustMicroCopy";
@@ -19,7 +20,6 @@ type ResendChecklistFormProps = {
 type FormStatus = "idle" | "loading" | "success" | "error";
 
 export function ResendChecklistForm({
-  compact = false,
   className,
   source = "checklist_page",
   submitLabel = "Get My Free Checklist",
@@ -116,13 +116,6 @@ export function ResendChecklistForm({
       className={cn("space-y-4", className)}
       noValidate
     >
-      {!compact ? (
-        <p className="text-sm leading-relaxed text-slate-600">
-          Enter your email and we&apos;ll send the 6-page checklist PDF to your
-          inbox. Optional newsletter tips are off unless you opt in.
-        </p>
-      ) : null}
-
       <input
         type="text"
         name="company"
@@ -141,7 +134,7 @@ export function ResendChecklistForm({
         type="email"
         autoComplete="email"
         required
-        placeholder="you@example.com"
+        placeholder="Enter your email"
         value={email}
         onChange={(event) => setEmail(event.target.value)}
         disabled={status === "loading"}
@@ -156,10 +149,7 @@ export function ResendChecklistForm({
           onChange={(event) => setNewsletterOptIn(event.target.checked)}
           disabled={status === "loading"}
         />
-        <span>
-          Also send occasional readiness tips by email. Unchecked by default —
-          checklist delivery does not subscribe you to marketing.
-        </span>
+        <span>Send me occasional background check tips, too.</span>
       </label>
 
       {status === "error" && message ? (
@@ -177,7 +167,15 @@ export function ResendChecklistForm({
         {status === "loading" ? "Sending…" : submitLabel}
       </Button>
 
-      <TrustMicroCopy>{TRUST_COPY.checklist}</TrustMicroCopy>
+      <TrustMicroCopy align="center" className="mt-3 text-center">
+        Free PDF delivered to your inbox.{" "}
+        <Link
+          href="/privacy"
+          className="underline decoration-slate-300 underline-offset-2 hover:text-navy-900"
+        >
+          Privacy Policy
+        </Link>
+      </TrustMicroCopy>
     </form>
   );
 }

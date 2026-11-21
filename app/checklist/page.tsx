@@ -74,11 +74,11 @@ export default function ChecklistPage() {
                 Free resource
               </p>
               <h1 className="mt-4 font-serif text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.75rem] lg:leading-[1.12]">
-                Get the free background-check checklist
+                Ready for Your Next Background Check?
               </h1>
               <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-slate-200 sm:text-lg lg:mx-0">
-                Enter your email and we&apos;ll send the 6-page PDF so you&apos;re
-                organized before HR starts screening.
+                Get our free checklist to review your employment history, spot
+                discrepancies, and prepare with confidence.
               </p>
 
               <ul className="mx-auto mt-8 hidden max-w-md space-y-3 text-left sm:block lg:mx-0 lg:max-w-none">
@@ -101,18 +101,7 @@ export default function ChecklistPage() {
 
             <div className="mx-auto w-full max-w-md lg:mx-0 lg:max-w-none">
               <div className="rounded-3xl border border-white/25 bg-white/85 p-6 shadow-2xl shadow-navy-950/30 backdrop-blur-xl sm:p-8">
-                <div className="text-center">
-                  <p className="text-sm font-semibold uppercase tracking-[0.12em] text-brand-700">
-                    Email delivery
-                  </p>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                    We&apos;ll send the checklist to your inbox. No on-page
-                    download — check your email after you submit.
-                  </p>
-                </div>
-                <div className="mt-6">
-                  <ChecklistSignupForm source="checklist_page" />
-                </div>
+                <ChecklistSignupForm source="checklist_page" />
                 <p className="mt-5 text-center text-xs text-slate-500">
                   Questions? <ContactEmailLink className="text-xs font-medium" />.
                 </p>

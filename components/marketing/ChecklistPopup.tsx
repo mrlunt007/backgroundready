@@ -115,19 +115,18 @@ export function ChecklistPopup() {
           id="checklist-popup-title"
           className="mt-2 font-serif text-2xl font-semibold text-navy-900"
         >
-          Have a background check coming up?
+          Ready for Your Next Background Check?
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-slate-600">
-          Get our free 6-page checklist emailed to you so you can review your
-          employment history, spot potential discrepancies, and prepare before
-          screening starts.
+          Get our free checklist to review your employment history, spot
+          discrepancies, and prepare with confidence.
         </p>
 
         <div className="mt-5">
           <ResendChecklistForm
             compact
             source="popup"
-            submitLabel="Send Me the Free Checklist"
+            submitLabel="Get My Free Checklist"
             onSuccess={() => {
               dismissChecklistPopup(7);
             }}

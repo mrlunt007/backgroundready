@@ -1,8 +1,7 @@
 /** Reassurance micro-copy for conversion points */
 
 export const TRUST_COPY = {
-  checklist:
-    "Free · No credit card · Unsubscribe anytime",
+  checklist: "Free PDF delivered to your inbox.",
   checklistEmail: "Your info stays private. We never share your data.",
   product: "Instant download · PDF format · Keep forever",
   service: "Confidential · No judgment · Cancel anytime",
