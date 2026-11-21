@@ -48,6 +48,17 @@ export function toUserFacingLeadError(error: string | undefined): string {
     return "Email signup is misconfigured. Please try again later or email us directly.";
   }
 
+  if (
+    message.includes("failed to render react component") ||
+    message.includes("@react-email/render")
+  ) {
+    return "Email signup is temporarily unavailable. Please try again shortly.";
+  }
+
+  if (message.includes("checklist pdf is missing")) {
+    return "We couldn't attach the checklist right now. Please try again shortly.";
+  }
+
   if (message.includes("unsubscribed")) {
     return error!;
   }

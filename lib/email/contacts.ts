@@ -4,6 +4,7 @@ import {
   getNewsletterSegmentId,
   getNewsletterTopicId,
 } from "@/lib/email/env";
+import { errorFields, logLeadEvent } from "@/lib/email/logging";
 import {
   isContactAlreadyExistsError,
   isContactNotFoundError,
@@ -126,10 +127,23 @@ async function softUpdateProperties(
       properties,
     });
     if (error) {
-      console.warn("[contacts] property update failed:", error.message);
+      logLeadEvent("contacts", {
+        stage: "contact_properties",
+        ok: false,
+        errorType: "resend_api",
+        errorName: error.name,
+        statusCode: error.statusCode ?? null,
+        message: error.message,
+        detail: "optional_property_update_failed",
+      });
     }
   } catch (error) {
-    console.warn("[contacts] property update threw:", error);
+    logLeadEvent("contacts", {
+      stage: "contact_properties",
+      ok: false,
+      ...errorFields(error),
+      detail: "optional_property_update_threw",
+    });
   }
 }
 
@@ -141,10 +155,23 @@ async function softAddSegment(email: string, segmentId: string): Promise<void> {
       segmentId,
     });
     if (error && !isContactAlreadyExistsError(error)) {
-      console.warn("[contacts] segment add failed:", error.message);
+      logLeadEvent("contacts", {
+        stage: "contact_segment",
+        ok: false,
+        errorType: "resend_api",
+        errorName: error.name,
+        statusCode: error.statusCode ?? null,
+        message: error.message,
+        detail: "optional_segment_add_failed",
+      });
     }
   } catch (error) {
-    console.warn("[contacts] segment add threw:", error);
+    logLeadEvent("contacts", {
+      stage: "contact_segment",
+      ok: false,
+      ...errorFields(error),
+      detail: "optional_segment_add_threw",
+    });
   }
 }
 
