@@ -69,12 +69,12 @@ export const FAQ_ITEMS: FAQItem[] = [
   {
     question: "Are products and services available now?",
     answer:
-      "Yes. Visit the Products and Services pages, or email us at contact@backgroundready.com. We respond within two business days. The free checklist is available from the checklist page via email confirmation.",
+      "Yes. Visit the Products and Services pages, or email us at contact@backgroundready.com. We respond within two business days. The free checklist is available from the checklist page.",
   },
   {
     question: "How is my email used for the checklist?",
     answer:
-      "We use it to send your checklist confirmation email (with the PDF download) and occasional readiness tips. You can unsubscribe anytime. We never share your data.",
+      "We use it to email your checklist PDF. Newsletter tips are optional and require a separate opt-in plus confirmation. You can unsubscribe anytime. We never share your data.",
   },
 ];
 

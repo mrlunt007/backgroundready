@@ -13,45 +13,49 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
-| Command       | Description          |
-| ------------- | -------------------- |
-| `npm run dev` | Start dev server     |
-| `npm run build` | Production build   |
+| Command         | Description           |
+| --------------- | --------------------- |
+| `npm run dev`   | Start dev server      |
+| `npm run build` | Production build      |
 | `npm run start` | Run production server |
-| `npm run lint` | ESLint              |
+| `npm run lint`  | ESLint                |
 
 ## Environment
 
-Copy `.env.example` to `.env.local` and fill in values as needed:
-
-```env
-NEXT_PUBLIC_SITE_URL=https://backgroundready.com
-NEXT_PUBLIC_FORMSPREE_FORM_ID=your_form_id
-```
+Copy `.env.example` to `.env.local` and fill in values as needed.
 
 ### Contact form (Formspree)
 
-1. Create a free account at [formspree.io](https://formspree.io).
-2. Click **New Form**, name it (e.g. Contact), and set the recipient to `contact@backgroundready.com` (Cloudflare will forward into Proton) or your Proton address.
-3. Copy the form ID from the endpoint (`https://formspree.io/f/xxxxxxxx` → `xxxxxxxx`).
-4. Set `NEXT_PUBLIC_FORMSPREE_FORM_ID` in `.env.local` and in Vercel → Project → Settings → Environment Variables.
-5. Submit a test from `/contact`; confirm the email arrives in Proton.
+1. Create a form at [formspree.io](https://formspree.io) for `contact@backgroundready.com`.
+2. Set `NEXT_PUBLIC_FORMSPREE_FORM_ID` in `.env.local` and Vercel.
 
-### Free checklist signup (Kit)
+### Lead capture: Kit → Resend (feature flagged)
 
-The `/checklist` page (and blog signup block) embed a Kit form that emails a confirmation with the PDF download.
+Default provider is **Kit** so Production stays stable.
 
-- Form UID / script: see `KIT_CHECKLIST_FORM` in `lib/constants.ts`
-- PDF is also hosted at `/downloads/background-ready-free-checklist.pdf` for Kit confirmation delivery and backup access
-- Contact form stays on Formspree (`NEXT_PUBLIC_FORMSPREE_FORM_ID`) — keep list signup and contact separate
+Required Resend env vars (see `.env.example`):
+
+- `RESEND_API_KEY`
+- `RESEND_FROM_EMAIL` (`contact@backgroundready.com`)
+- `RESEND_REPLY_TO` (`contact@backgroundready.com`)
+- `RESEND_SEGMENT_CHECKLIST_ID`
+- `RESEND_SEGMENT_NEWSLETTER_ID`
+- `RESEND_TOPIC_NEWSLETTER_ID`
+- `LEAD_SIGNING_SECRET`
+- `NEXT_PUBLIC_LEAD_PROVIDER` (`kit` live, `resend` for testing)
+
+No Upstash/Redis is required right now. Duplicate checklist emails are limited via Resend contact properties (`checklist_sent_at`). Persistent IP rate limiting can be added later.
+
+Checklist PDF: `public/downloads/background-ready-free-checklist.pdf`  
+Public URL: `/downloads/background-ready-free-checklist.pdf`
 
 ## Project structure
 
-- `app/` — routes and layouts
+- `app/` — routes, API lead endpoints, layouts
 - `components/` — UI, layout, and marketing components
-- `content/` — reserved for MDX content (Phase 2+)
-- `lib/constants.ts` — site name, nav, URLs
-- `tina/` — reserved for TinaCMS (later)
+- `emails/` — React Email templates (Resend)
+- `lib/email/` — Resend client, contacts, delivery helpers
+- `content/` — MDX blog/products/services
 
 ## Deploy
 

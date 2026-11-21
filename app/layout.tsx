@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { SiteJsonLd } from "@/components/layout/SiteJsonLd";
+import { ChecklistPopup } from "@/components/marketing/ChecklistPopup";
 import { StickyChecklistBar } from "@/components/marketing/StickyChecklistBar";
 import {
   SITE_DESCRIPTION,
@@ -59,6 +60,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <Footer />
         <StickyChecklistBar />
+        <ChecklistPopup />
         <Analytics />
       </body>
     </html>

@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/Card";
 import { ContactEmailLink } from "@/components/ui/ContactEmailLink";
 import { Container } from "@/components/ui/Container";
 import { SITE_NAME } from "@/lib/constants";
+import { isResendLeadsEnabled } from "@/lib/leads/flags";
 
 export const metadata: Metadata = {
   title: "Free checklist",
@@ -44,31 +45,36 @@ const benefits = [
 ];
 
 export default function ChecklistPage() {
+  const resendEnabled = isResendLeadsEnabled();
+
   return (
     <>
       <section className="border-b border-slate-100 bg-gradient-to-b from-brand-50/70 via-white to-white">
-        <Container className="py-12 sm:py-16 lg:py-20">
+        <Container className="py-10 sm:py-14 lg:py-16">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-brand-700">
               Free resource
             </p>
-            <h1 className="mt-3 text-3xl font-bold tracking-tight text-navy-900 sm:text-4xl lg:text-5xl">
+            <h1 className="mt-3 text-3xl font-bold tracking-tight text-navy-900 sm:text-4xl lg:text-[2.75rem] lg:leading-tight">
               Get the free background-check checklist
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
-              Enter your email, confirm the message we send, and download the
-              PDF—so you&apos;re organized before HR starts screening.
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+              {resendEnabled
+                ? "Enter your email and we’ll send the 6-page PDF so you’re organized before HR starts screening."
+                : "Enter your email, confirm the message we send, and download the PDF—so you’re organized before HR starts screening."}
             </p>
 
             <Card className="mx-auto mt-8 w-full max-w-2xl border-brand-200/70 bg-white p-6 text-left shadow-md shadow-brand-500/10 sm:p-8 lg:p-10">
               <p className="text-center text-sm font-semibold uppercase tracking-wide text-brand-700">
-                Email signup
+                Get your checklist
               </p>
               <p className="mt-2 text-center text-sm text-slate-600">
-                We&apos;ll send a confirmation link with your PDF download.
+                {resendEnabled
+                  ? "We’ll email the PDF to you. Newsletter tips are optional."
+                  : "We’ll send a confirmation link with your PDF download."}
               </p>
               <div className="mt-5">
-                <ChecklistSignupForm compact />
+                <ChecklistSignupForm source="checklist_page" />
               </div>
               <p className="mt-4 text-center text-xs text-slate-500">
                 Questions? <ContactEmailLink className="text-xs font-medium" />.

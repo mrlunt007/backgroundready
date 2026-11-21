@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { ContactEmailLink } from "@/components/ui/ContactEmailLink";
 import { Container } from "@/components/ui/Container";
 import { CTAWithTrust } from "@/components/ui/CTAWithTrust";
+import { FooterNewsletterForm } from "@/components/marketing/FooterNewsletterForm";
 import {
   NAV_LINKS,
   PRIMARY_CTA,
@@ -25,7 +26,7 @@ export function Footer() {
     <footer className="dark-section border-t border-white/5">
       <Container className="py-16">
         <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-4">
             <Link href="/" className="flex items-center gap-2.5">
               <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--brand-primary)] text-sm font-bold text-white">
                 BR
@@ -42,7 +43,7 @@ export function Footer() {
             </CTAWithTrust>
           </div>
 
-          <div className="grid gap-10 sm:grid-cols-2 lg:col-span-7 lg:grid-cols-3">
+          <div className="grid gap-10 sm:grid-cols-2 lg:col-span-5 lg:grid-cols-2">
             <div>
               <p className="text-sm font-semibold text-white">Resources</p>
               <ul className="mt-4 space-y-3">
@@ -77,17 +78,32 @@ export function Footer() {
                     </Link>
                   </li>
                 ))}
-              </ul>
-            </div>
-
-            <div>
-              <p className="text-sm font-semibold text-white">Contact</p>
-              <ul className="mt-4 space-y-3 text-sm text-slate-400">
                 <li>
-                  <ContactEmailLink className="text-slate-400 decoration-slate-600 hover:text-white" />
+                  <Link
+                    href="/privacy"
+                    className="text-sm text-slate-400 transition-colors hover:text-white"
+                  >
+                    Privacy
+                  </Link>
                 </li>
               </ul>
             </div>
+          </div>
+
+          <div className="lg:col-span-3">
+            <p className="text-sm font-semibold text-white">
+              Stay prepared for your next background check
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-slate-400">
+              Get practical tips about employment verification, background
+              screening, and protecting your employment information.
+            </p>
+            <div className="mt-4">
+              <FooterNewsletterForm />
+            </div>
+            <p className="mt-4 text-sm text-slate-400">
+              <ContactEmailLink className="text-slate-400 decoration-slate-600 hover:text-white" />
+            </p>
           </div>
         </div>
 

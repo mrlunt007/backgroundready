@@ -14,12 +14,12 @@ export function BlogEmailSignup() {
           Want the free checklist?
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-slate-600">
-          Enter your email and we&apos;ll send a confirmation with the
-          background-check readiness checklist PDF. Prefer to ask a question?{" "}
+          Enter your email and we&apos;ll send the background-check readiness
+          checklist PDF. Prefer to ask a question?{" "}
           <ContactEmailLink withSubject className="text-sm" />
         </p>
         <div className="mt-6">
-          <ChecklistSignupForm compact />
+          <ChecklistSignupForm compact source="blog" />
         </div>
         <p className="mt-4 text-xs text-slate-500">{TRUST_COPY.checklistEmail}</p>
       </div>

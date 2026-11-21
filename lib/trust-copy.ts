@@ -2,11 +2,11 @@
 
 export const TRUST_COPY = {
   checklist:
-    "Free · Confirm by email · Unsubscribe anytime",
+    "Free · No credit card · Unsubscribe anytime",
   checklistEmail: "Your info stays private. We never share your data.",
   product: "Instant download · PDF format · Keep forever",
   service: "Confidential · No judgment · Cancel anytime",
-  hero: "Free · Confirm by email · Unsubscribe anytime",
+  hero: "Free · No credit card · Unsubscribe anytime",
   contact: "We respond within two business days · Your message stays private",
   general: "Educational resources only · Not legal advice",
 } as const;

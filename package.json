@@ -16,7 +16,9 @@
     "next-mdx-remote": "^6.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-email": "^6.11.16",
     "reading-time": "^1.5.0",
+    "resend": "^6.39.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
