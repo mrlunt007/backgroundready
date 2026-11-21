@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { isResendLeadsEnabled } from "@/lib/leads/flags";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -11,10 +10,6 @@ export function FooterNewsletterForm() {
   const [company, setCompany] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState<string | null>(null);
-
-  if (!isResendLeadsEnabled()) {
-    return null;
-  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

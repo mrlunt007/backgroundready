@@ -4,7 +4,6 @@ import { Card } from "@/components/ui/Card";
 import { ContactEmailLink } from "@/components/ui/ContactEmailLink";
 import { Container } from "@/components/ui/Container";
 import { SITE_NAME } from "@/lib/constants";
-import { isResendLeadsEnabled } from "@/lib/leads/flags";
 
 export const metadata: Metadata = {
   title: "Free checklist",
@@ -45,8 +44,6 @@ const benefits = [
 ];
 
 export default function ChecklistPage() {
-  const resendEnabled = isResendLeadsEnabled();
-
   return (
     <>
       <section className="border-b border-slate-100 bg-gradient-to-b from-brand-50/70 via-white to-white">
@@ -59,9 +56,8 @@ export default function ChecklistPage() {
               Get the free background-check checklist
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
-              {resendEnabled
-                ? "Enter your email and we’ll send the 6-page PDF so you’re organized before HR starts screening."
-                : "Enter your email, confirm the message we send, and download the PDF—so you’re organized before HR starts screening."}
+              Enter your email and we&apos;ll send the 6-page PDF so you&apos;re
+              organized before HR starts screening.
             </p>
 
             <Card className="mx-auto mt-8 w-full max-w-2xl border-brand-200/70 bg-white p-6 text-left shadow-md shadow-brand-500/10 sm:p-8 lg:p-10">
@@ -69,9 +65,7 @@ export default function ChecklistPage() {
                 Get your checklist
               </p>
               <p className="mt-2 text-center text-sm text-slate-600">
-                {resendEnabled
-                  ? "We’ll email the PDF to you. Newsletter tips are optional."
-                  : "We’ll send a confirmation link with your PDF download."}
+                We&apos;ll email the PDF to you. Newsletter tips are optional.
               </p>
               <div className="mt-5">
                 <ChecklistSignupForm source="checklist_page" />

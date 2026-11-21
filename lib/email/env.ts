@@ -1,24 +1,11 @@
 import { CONTACT_EMAIL, SITE_URL } from "@/lib/constants";
-import { isResendLeadsEnabled as isResendLeadsEnabledFlag } from "@/lib/leads/flags";
-
-export type LeadProvider = "kit" | "resend";
-
-/** Public feature flag — keep Kit live until Resend is verified. */
-export function getLeadProvider(): LeadProvider {
-  return isResendLeadsEnabledFlag() ? "resend" : "kit";
-}
-
-export function isResendLeadsEnabled(): boolean {
-  return isResendLeadsEnabledFlag();
-}
 
 export function getResendApiKey(): string | null {
   return process.env.RESEND_API_KEY?.trim() || null;
 }
 
 export function getResendFrom(): string {
-  const email =
-    process.env.RESEND_FROM_EMAIL?.trim() || CONTACT_EMAIL;
+  const email = process.env.RESEND_FROM_EMAIL?.trim() || CONTACT_EMAIL;
   return `BackgroundReady <${email}>`;
 }
 

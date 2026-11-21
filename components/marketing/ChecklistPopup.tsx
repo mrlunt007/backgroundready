@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ResendChecklistForm } from "@/components/marketing/ResendChecklistForm";
-import { isResendLeadsEnabled } from "@/lib/leads/flags";
 import {
   dismissChecklistPopup,
   hasChecklistRequested,
   isChecklistPopupDismissed,
 } from "@/lib/leads/storage";
+
 const EXCLUDED_PATHS = new Set(["/checklist", "/contact"]);
 
 export function ChecklistPopup() {
@@ -17,7 +17,6 @@ export function ChecklistPopup() {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    if (!isResendLeadsEnabled()) return;
     if (EXCLUDED_PATHS.has(pathname)) return;
     if (hasChecklistRequested() || isChecklistPopupDismissed()) return;
 

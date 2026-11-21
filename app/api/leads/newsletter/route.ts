@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { startNewsletterSubscription } from "@/lib/email/contacts";
-import { getResendApiKey, isResendLeadsEnabled } from "@/lib/email/env";
+import { getResendApiKey } from "@/lib/email/env";
 import { readJsonBody } from "@/lib/email/request-guards";
 import { sendNewsletterConfirmEmail } from "@/lib/email/send-newsletter-confirm";
 import { newsletterLeadSchema } from "@/lib/email/validation";
@@ -8,13 +8,6 @@ import { newsletterLeadSchema } from "@/lib/email/validation";
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
-  if (!isResendLeadsEnabled()) {
-    return NextResponse.json(
-      { error: "Newsletter signup is not enabled yet." },
-      { status: 503 },
-    );
-  }
-
   if (!getResendApiKey()) {
     return NextResponse.json(
       { error: "Email delivery is not configured." },

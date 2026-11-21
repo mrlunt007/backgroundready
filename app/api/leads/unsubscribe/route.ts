@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import { unsubscribeContact } from "@/lib/email/contacts";
-import { getResendApiKey, isResendLeadsEnabled } from "@/lib/email/env";
+import { getResendApiKey } from "@/lib/email/env";
 import { verifyLeadToken } from "@/lib/email/tokens";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
-  if (!isResendLeadsEnabled() || !getResendApiKey()) {
+  if (!getResendApiKey()) {
     return NextResponse.json(
       { error: "Unsubscribe is not available." },
       { status: 503 },

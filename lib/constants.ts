@@ -42,12 +42,6 @@ export const CHECKLIST_PDF_HREF = "/downloads/background-ready-free-checklist.pd
 
 export const CHECKLIST_PDF_FILENAME = "BackgroundReady-Free-Checklist.pdf";
 
-/** Kit (ConvertKit) inline form for checklist signup + PDF delivery */
-export const KIT_CHECKLIST_FORM = {
-  uid: "4923f4934a",
-  src: "https://backgroundready.kit.com/4923f4934a/index.js",
-} as const;
-
 export function contactMailtoForProduct(productTitle: string): string {
   return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Product inquiry: ${productTitle}`)}`;
 }

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getResendApiKey, isResendLeadsEnabled } from "@/lib/email/env";
+import { getResendApiKey } from "@/lib/email/env";
 import { processChecklistLead } from "@/lib/email/process-checklist";
 import { readJsonBody } from "@/lib/email/request-guards";
 import { checklistLeadSchema } from "@/lib/email/validation";
@@ -7,13 +7,6 @@ import { checklistLeadSchema } from "@/lib/email/validation";
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
-  if (!isResendLeadsEnabled()) {
-    return NextResponse.json(
-      { error: "Resend lead capture is not enabled yet." },
-      { status: 503 },
-    );
-  }
-
   if (!getResendApiKey()) {
     return NextResponse.json(
       { error: "Email delivery is not configured." },
