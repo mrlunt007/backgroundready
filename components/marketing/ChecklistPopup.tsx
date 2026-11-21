@@ -11,14 +11,32 @@ import {
 
 const EXCLUDED_PATHS = new Set(["/checklist", "/contact"]);
 
+function normalizePath(pathname: string): string {
+  if (pathname.length > 1 && pathname.endsWith("/")) {
+    return pathname.slice(0, -1);
+  }
+  return pathname;
+}
+
+function isExcludedPath(pathname: string): boolean {
+  return EXCLUDED_PATHS.has(normalizePath(pathname));
+}
+
 export function ChecklistPopup() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    if (EXCLUDED_PATHS.has(pathname)) return;
-    if (hasChecklistRequested() || isChecklistPopupDismissed()) return;
+    if (
+      isExcludedPath(pathname) ||
+      hasChecklistRequested() ||
+      isChecklistPopupDismissed()
+    ) {
+      setEnabled(false);
+      setOpen(false);
+      return;
+    }
 
     setEnabled(true);
 
@@ -63,23 +81,34 @@ export function ChecklistPopup() {
     >
       <button
         type="button"
-        className="absolute inset-0 bg-navy-900/50 backdrop-blur-[2px]"
+        className="absolute inset-0 bg-navy-900/55 backdrop-blur-[2px]"
         aria-label="Dismiss checklist offer"
         onClick={close}
       />
-      <div className="relative w-full max-w-md rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl shadow-slate-900/20 sm:p-6">
+      <div className="relative w-full max-w-md rounded-3xl border border-white/40 bg-white/95 p-5 shadow-2xl shadow-slate-900/25 backdrop-blur-xl sm:p-6">
         <button
           type="button"
           onClick={close}
-          className="absolute right-3 top-3 rounded-lg p-2 text-slate-500 hover:bg-slate-100 hover:text-navy-900"
+          className="absolute right-3 top-3 rounded-xl p-2.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-navy-900"
           aria-label="Close"
         >
-          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden>
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18 18 6M6 6l12 12" />
+          <svg
+            className="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            aria-hidden
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18 18 6M6 6l12 12"
+            />
           </svg>
         </button>
 
-        <p className="pr-8 text-xs font-semibold uppercase tracking-wider text-brand-700">
+        <p className="pr-10 text-xs font-semibold uppercase tracking-[0.14em] text-brand-700">
           Free checklist
         </p>
         <h2
@@ -89,9 +118,9 @@ export function ChecklistPopup() {
           Have a background check coming up?
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-slate-600">
-          Get our free 6-page checklist to review your employment history,
-          identify potential discrepancies, and prepare for your next background
-          check.
+          Get our free 6-page checklist emailed to you so you can review your
+          employment history, spot potential discrepancies, and prepare before
+          screening starts.
         </p>
 
         <div className="mt-5">

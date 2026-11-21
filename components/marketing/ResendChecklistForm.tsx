@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { TrustMicroCopy } from "@/components/ui/TrustMicroCopy";
-import { CHECKLIST_PDF_HREF } from "@/lib/constants";
 import { markChecklistRequested } from "@/lib/leads/storage";
 import { TRUST_COPY } from "@/lib/trust-copy";
 import { cn } from "@/lib/utils";
@@ -31,7 +30,6 @@ export function ResendChecklistForm({
   const [company, setCompany] = useState("");
   const [status, setStatus] = useState<FormStatus>("idle");
   const [message, setMessage] = useState<string | null>(null);
-  const [downloadUrl, setDownloadUrl] = useState(CHECKLIST_PDF_HREF);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -52,7 +50,6 @@ export function ResendChecklistForm({
 
       const data = (await response.json()) as {
         error?: string;
-        downloadUrl?: string;
         alreadySent?: boolean;
         newsletterConfirmSent?: boolean;
       };
@@ -64,14 +61,13 @@ export function ResendChecklistForm({
       }
 
       markChecklistRequested();
-      if (data.downloadUrl) setDownloadUrl(data.downloadUrl);
       setStatus("success");
       setMessage(
         data.alreadySent
-          ? "We already emailed this checklist recently. You can download it again below."
+          ? "We've already sent this checklist to your inbox recently. Please check your email to download the PDF."
           : data.newsletterConfirmSent
-            ? "Checklist sent. Check your inbox — and confirm the newsletter email if you opted in."
-            : "Checklist sent. Check your inbox for the PDF.",
+            ? "We've sent your free Background Check Readiness Checklist to your inbox. Please also confirm the newsletter email if you opted in."
+            : "We've sent your free Background Check Readiness Checklist to your inbox. Please check your email to download the PDF.",
       );
       onSuccess?.();
     } catch {
@@ -84,17 +80,32 @@ export function ResendChecklistForm({
     return (
       <div
         className={cn(
-          "rounded-xl border border-brand-200/80 bg-gradient-to-br from-brand-50/80 to-white p-5 sm:p-6",
+          "rounded-2xl border border-brand-200/70 bg-gradient-to-br from-brand-50/90 to-white p-5 text-center sm:p-6",
           className,
         )}
         role="status"
       >
-        <p className="font-semibold text-navy-900">You&apos;re all set</p>
+        <div
+          className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-brand-100 text-brand-800"
+          aria-hidden
+        >
+          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2.25}
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+        </div>
+        <p className="mt-4 font-serif text-xl font-semibold text-navy-900">
+          Check your email
+        </p>
         <p className="mt-2 text-sm leading-relaxed text-slate-600">{message}</p>
-        <Button href={downloadUrl} size="lg" className="mt-4 w-full" download>
-          Download Your Free Checklist
-        </Button>
-        <TrustMicroCopy className="mt-3">{TRUST_COPY.checklistEmail}</TrustMicroCopy>
+        <p className="mt-3 text-xs leading-relaxed text-slate-500">
+          If you don&apos;t see it, check your spam or promotions folder.
+        </p>
+        <TrustMicroCopy className="mt-4">{TRUST_COPY.checklistEmail}</TrustMicroCopy>
       </div>
     );
   }
@@ -106,9 +117,9 @@ export function ResendChecklistForm({
       noValidate
     >
       {!compact ? (
-        <p className="text-sm text-slate-600">
-          Enter your email and we&apos;ll send the 6-page checklist PDF right
-          away. Optional newsletter tips are off unless you opt in.
+        <p className="text-sm leading-relaxed text-slate-600">
+          Enter your email and we&apos;ll send the 6-page checklist PDF to your
+          inbox. Optional newsletter tips are off unless you opt in.
         </p>
       ) : null}
 
@@ -134,9 +145,10 @@ export function ResendChecklistForm({
         value={email}
         onChange={(event) => setEmail(event.target.value)}
         disabled={status === "loading"}
+        className="rounded-xl border-slate-200/90 bg-white/90 py-3 shadow-sm backdrop-blur-sm"
       />
 
-      <label className="flex items-start gap-3 text-sm text-slate-600">
+      <label className="flex items-start gap-3 text-sm leading-relaxed text-slate-600">
         <input
           type="checkbox"
           className="mt-1 h-4 w-4 rounded border-slate-300 text-[var(--brand-primary)] focus:ring-[var(--brand-primary)]"

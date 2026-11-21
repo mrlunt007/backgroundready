@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { ChecklistSignupForm } from "@/components/marketing/ChecklistSignupForm";
-import { Card } from "@/components/ui/Card";
 import { ContactEmailLink } from "@/components/ui/ContactEmailLink";
 import { Container } from "@/components/ui/Container";
 import { SITE_NAME } from "@/lib/constants";
+import { IMAGES } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Free checklist",
-  description: `Download the free background-check readiness checklist from ${SITE_NAME}.`,
+  description: `Get the free background-check readiness checklist from ${SITE_NAME} delivered to your email.`,
 };
 
 const checklistItems = [
@@ -46,41 +47,84 @@ const benefits = [
 export default function ChecklistPage() {
   return (
     <>
-      <section className="border-b border-slate-100 bg-gradient-to-b from-brand-50/70 via-white to-white">
-        <Container className="py-10 sm:py-14 lg:py-16">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-wider text-brand-700">
-              Free resource
-            </p>
-            <h1 className="mt-3 text-3xl font-bold tracking-tight text-navy-900 sm:text-4xl lg:text-[2.75rem] lg:leading-tight">
-              Get the free background-check checklist
-            </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
-              Enter your email and we&apos;ll send the 6-page PDF so you&apos;re
-              organized before HR starts screening.
-            </p>
+      <section className="relative isolate overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src={IMAGES.reviewingDocuments.src}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-br from-navy-950/88 via-navy-900/82 to-navy-900/70"
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(14,179,158,0.22),transparent_55%)]"
+            aria-hidden
+          />
+        </div>
 
-            <Card className="mx-auto mt-8 w-full max-w-2xl border-brand-200/70 bg-white p-6 text-left shadow-md shadow-brand-500/10 sm:p-8 lg:p-10">
-              <p className="text-center text-sm font-semibold uppercase tracking-wide text-brand-700">
-                Get your checklist
+        <Container className="relative py-14 sm:py-20 lg:py-24">
+          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-14">
+            <div className="max-w-xl text-center lg:text-left">
+              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-brand-200">
+                Free resource
               </p>
-              <p className="mt-2 text-center text-sm text-slate-600">
-                We&apos;ll email the PDF to you. Newsletter tips are optional.
+              <h1 className="mt-4 font-serif text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.75rem] lg:leading-[1.12]">
+                Get the free background-check checklist
+              </h1>
+              <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-slate-200 sm:text-lg lg:mx-0">
+                Enter your email and we&apos;ll send the 6-page PDF so you&apos;re
+                organized before HR starts screening.
               </p>
-              <div className="mt-5">
-                <ChecklistSignupForm source="checklist_page" />
+
+              <ul className="mx-auto mt-8 hidden max-w-md space-y-3 text-left sm:block lg:mx-0 lg:max-w-none">
+                {benefits.map((benefit) => (
+                  <li
+                    key={benefit}
+                    className="flex items-start gap-3 text-sm text-slate-200"
+                  >
+                    <span
+                      className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/90 text-[11px] font-bold text-white"
+                      aria-hidden
+                    >
+                      ✓
+                    </span>
+                    {benefit}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mx-auto w-full max-w-md lg:mx-0 lg:max-w-none">
+              <div className="rounded-3xl border border-white/25 bg-white/85 p-6 shadow-2xl shadow-navy-950/30 backdrop-blur-xl sm:p-8">
+                <div className="text-center">
+                  <p className="text-sm font-semibold uppercase tracking-[0.12em] text-brand-700">
+                    Email delivery
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                    We&apos;ll send the checklist to your inbox. No on-page
+                    download — check your email after you submit.
+                  </p>
+                </div>
+                <div className="mt-6">
+                  <ChecklistSignupForm source="checklist_page" />
+                </div>
+                <p className="mt-5 text-center text-xs text-slate-500">
+                  Questions? <ContactEmailLink className="text-xs font-medium" />.
+                </p>
               </div>
-              <p className="mt-4 text-center text-xs text-slate-500">
-                Questions? <ContactEmailLink className="text-xs font-medium" />.
-              </p>
-            </Card>
+            </div>
           </div>
         </Container>
       </section>
 
       <section className="bg-white py-12 sm:py-16">
         <Container className="max-w-3xl">
-          <h2 className="text-center text-xl font-semibold text-navy-900 sm:text-2xl">
+          <h2 className="text-center font-serif text-xl font-semibold text-navy-900 sm:text-2xl">
             What you&apos;ll work through
           </h2>
           <ul className="mt-8 space-y-4">
@@ -97,7 +141,7 @@ export default function ChecklistPage() {
             ))}
           </ul>
 
-          <ul className="mt-8 space-y-2 border-t border-slate-100 pt-8">
+          <ul className="mt-8 space-y-2 border-t border-slate-100 pt-8 sm:hidden">
             {benefits.map((benefit) => (
               <li key={benefit} className="flex gap-2 text-sm text-slate-600">
                 <span className="text-brand-600" aria-hidden>
