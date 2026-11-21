@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getResendApiKey } from "@/lib/email/env";
 import { processChecklistLead } from "@/lib/email/process-checklist";
 import { readJsonBody } from "@/lib/email/request-guards";
+import { toUserFacingLeadError } from "@/lib/email/resend-errors";
 import { checklistLeadSchema } from "@/lib/email/validation";
 
 export const runtime = "nodejs";
@@ -41,7 +42,7 @@ export async function POST(request: Request) {
     const result = await processChecklistLead(parsed.data);
     if (!result.ok) {
       return NextResponse.json(
-        { error: result.error },
+        { error: toUserFacingLeadError(result.error) },
         { status: result.status ?? 500 },
       );
     }

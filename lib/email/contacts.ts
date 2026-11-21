@@ -1,12 +1,151 @@
+import { ensureLeadContactProperties } from "@/lib/email/contact-properties";
 import {
   getChecklistSegmentId,
   getNewsletterSegmentId,
   getNewsletterTopicId,
 } from "@/lib/email/env";
+import {
+  isContactAlreadyExistsError,
+  isContactNotFoundError,
+} from "@/lib/email/resend-errors";
 import { getResendClient } from "@/lib/email/resend-client";
 
 function nowIso(): string {
   return new Date().toISOString();
+}
+
+type ContactRecord = {
+  id?: string;
+  email?: string;
+  unsubscribed?: boolean;
+  properties?: Record<string, unknown> | null;
+};
+
+async function getContact(
+  email: string,
+): Promise<{ contact: ContactRecord | null; notFound: boolean; error?: string }> {
+  const resend = getResendClient();
+  const { data, error } = await resend.contacts.get({ email });
+
+  if (data) {
+    return { contact: data as ContactRecord, notFound: false };
+  }
+
+  if (isContactNotFoundError(error)) {
+    return { contact: null, notFound: true };
+  }
+
+  // Some SDK/API responses use empty data without a clear not_found name.
+  if (!error || (error.message ?? "").toLowerCase().includes("not found")) {
+    return { contact: null, notFound: true };
+  }
+
+  return { contact: null, notFound: false, error: error.message };
+}
+
+/**
+ * Ensure a Resend contact exists for this email.
+ * Creates only when get() indicates the contact is missing.
+ */
+export async function ensureContactExists(options: {
+  email: string;
+  segmentIds?: string[];
+  topics?: Array<{ id: string; subscription: "opt_in" | "opt_out" }>;
+}): Promise<{ ok: true; contact: ContactRecord } | { ok: false; error: string }> {
+  const email = options.email.trim().toLowerCase();
+  const existing = await getContact(email);
+
+  if (existing.contact) {
+    return { ok: true, contact: existing.contact };
+  }
+
+  if (!existing.notFound && existing.error) {
+    return { ok: false, error: existing.error };
+  }
+
+  const resend = getResendClient();
+  const segments = options.segmentIds?.map((id) => ({ id }));
+
+  const { data, error } = await resend.contacts.create({
+    email,
+    unsubscribed: false,
+    ...(segments?.length ? { segments } : {}),
+    ...(options.topics?.length ? { topics: options.topics } : {}),
+  });
+
+  if (data) {
+    return { ok: true, contact: { id: data.id, email, unsubscribed: false } };
+  }
+
+  if (isContactAlreadyExistsError(error)) {
+    const again = await getContact(email);
+    if (again.contact) {
+      return { ok: true, contact: again.contact };
+    }
+  }
+
+  // Retry bare create if segment/topic payload was the problem.
+  if (error && (options.segmentIds?.length || options.topics?.length)) {
+    const bare = await resend.contacts.create({
+      email,
+      unsubscribed: false,
+    });
+    if (bare.data) {
+      return {
+        ok: true,
+        contact: { id: bare.data.id, email, unsubscribed: false },
+      };
+    }
+    if (isContactAlreadyExistsError(bare.error)) {
+      const again = await getContact(email);
+      if (again.contact) {
+        return { ok: true, contact: again.contact };
+      }
+    }
+    return {
+      ok: false,
+      error: bare.error?.message ?? error.message ?? "Failed to create contact",
+    };
+  }
+
+  return {
+    ok: false,
+    error: error?.message ?? "Failed to create contact",
+  };
+}
+
+async function softUpdateProperties(
+  email: string,
+  properties: Record<string, string>,
+): Promise<void> {
+  try {
+    await ensureLeadContactProperties();
+    const resend = getResendClient();
+    const { error } = await resend.contacts.update({
+      email,
+      properties,
+    });
+    if (error) {
+      console.warn("[contacts] property update failed:", error.message);
+    }
+  } catch (error) {
+    console.warn("[contacts] property update threw:", error);
+  }
+}
+
+async function softAddSegment(email: string, segmentId: string): Promise<void> {
+  try {
+    const resend = getResendClient();
+    const { error } = await resend.contacts.segments.add({
+      email,
+      segmentId,
+    });
+    if (error && !isContactAlreadyExistsError(error)) {
+      console.warn("[contacts] segment add failed:", error.message);
+    }
+  } catch (error) {
+    console.warn("[contacts] segment add threw:", error);
+  }
 }
 
 export async function upsertChecklistContact(options: {
@@ -14,56 +153,35 @@ export async function upsertChecklistContact(options: {
   source: string;
   newsletterOptInRequested: boolean;
 }): Promise<{ ok: true } | { ok: false; error: string }> {
-  const resend = getResendClient();
   const email = options.email.trim().toLowerCase();
   const checklistSegmentId = getChecklistSegmentId();
 
-  const segments = checklistSegmentId
-    ? [{ id: checklistSegmentId }]
-    : undefined;
-
-  const { error: createError } = await resend.contacts.create({
+  const ensured = await ensureContactExists({
     email,
-    unsubscribed: false,
-    properties: {
-      lead_type: "checklist",
-      checklist_source: options.source,
-      checklist_requested_at: nowIso(),
-      newsletter_opt_in_requested: options.newsletterOptInRequested
-        ? "true"
-        : "false",
-    },
-    ...(segments ? { segments } : {}),
+    segmentIds: checklistSegmentId ? [checklistSegmentId] : [],
   });
 
-  if (!createError) {
-    return { ok: true };
+  if (!ensured.ok) {
+    return { ok: false, error: ensured.error };
   }
 
-  // Contact may already exist — update properties / segment instead.
-  const { error: updateError } = await resend.contacts.update({
-    email,
-    unsubscribed: false,
-    properties: {
-      lead_type: "checklist",
-      checklist_source: options.source,
-      checklist_requested_at: nowIso(),
-      newsletter_opt_in_requested: options.newsletterOptInRequested
-        ? "true"
-        : "false",
-    },
+  // Never flip a globally unsubscribed contact back on via checklist request.
+  if (ensured.contact.unsubscribed) {
+    if (checklistSegmentId) {
+      await softAddSegment(email, checklistSegmentId);
+    }
+  } else if (checklistSegmentId) {
+    await softAddSegment(email, checklistSegmentId);
+  }
+
+  await softUpdateProperties(email, {
+    lead_type: "checklist",
+    checklist_source: options.source,
+    checklist_requested_at: nowIso(),
+    newsletter_opt_in_requested: options.newsletterOptInRequested
+      ? "true"
+      : "false",
   });
-
-  if (updateError) {
-    return { ok: false, error: updateError.message };
-  }
-
-  if (checklistSegmentId) {
-    await resend.contacts.segments.add({
-      email,
-      segmentId: checklistSegmentId,
-    });
-  }
 
   return { ok: true };
 }
@@ -79,14 +197,23 @@ export async function startNewsletterSubscription(options: {
     }
   | { ok: false; error: string }
 > {
-  const resend = getResendClient();
   const email = options.email.trim().toLowerCase();
   const newsletterSegmentId = getNewsletterSegmentId();
   const newsletterTopicId = getNewsletterTopicId();
 
-  const { data: existing } = await resend.contacts.get({ email });
+  const ensured = await ensureContactExists({
+    email,
+    segmentIds: newsletterSegmentId ? [newsletterSegmentId] : [],
+    topics: newsletterTopicId
+      ? [{ id: newsletterTopicId, subscription: "opt_out" }]
+      : [],
+  });
 
-  if (existing?.unsubscribed) {
+  if (!ensured.ok) {
+    return { ok: false, error: ensured.error };
+  }
+
+  if (ensured.contact.unsubscribed) {
     return {
       ok: false,
       error:
@@ -95,67 +222,36 @@ export async function startNewsletterSubscription(options: {
   }
 
   const status =
-    typeof existing?.properties?.newsletter_status === "string"
-      ? existing.properties.newsletter_status
+    typeof ensured.contact.properties?.newsletter_status === "string"
+      ? ensured.contact.properties.newsletter_status
       : null;
 
   if (status === "confirmed") {
     if (newsletterSegmentId) {
-      await resend.contacts.segments.add({
-        email,
-        segmentId: newsletterSegmentId,
-      });
+      await softAddSegment(email, newsletterSegmentId);
     }
     return { ok: true, skipConfirmEmail: true, alreadySubscribed: true };
   }
 
   if (status === "pending") {
-    const requestedAt = existing?.properties?.newsletter_requested_at;
+    const requestedAt = ensured.contact.properties?.newsletter_requested_at;
     if (typeof requestedAt === "string") {
       const ts = Date.parse(requestedAt);
-      // Avoid spamming confirmation emails within 24 hours.
       if (!Number.isNaN(ts) && Date.now() - ts < 1000 * 60 * 60 * 24) {
         return { ok: true, skipConfirmEmail: true };
       }
     }
   }
 
-  const { error: createError } = await resend.contacts.create({
-    email,
-    unsubscribed: false,
-    properties: {
-      newsletter_status: "pending",
-      newsletter_source: options.source,
-      newsletter_requested_at: nowIso(),
-    },
-    ...(newsletterTopicId
-      ? {
-          topics: [{ id: newsletterTopicId, subscription: "opt_out" as const }],
-        }
-      : {}),
-  });
-
-  if (createError) {
-    const { error: updateError } = await resend.contacts.update({
-      email,
-      properties: {
-        newsletter_status: "pending",
-        newsletter_source: options.source,
-        newsletter_requested_at: nowIso(),
-      },
-    });
-
-    if (updateError) {
-      return { ok: false, error: updateError.message };
-    }
-  }
-
   if (newsletterSegmentId) {
-    await resend.contacts.segments.add({
-      email,
-      segmentId: newsletterSegmentId,
-    });
+    await softAddSegment(email, newsletterSegmentId);
   }
+
+  await softUpdateProperties(email, {
+    newsletter_status: "pending",
+    newsletter_source: options.source,
+    newsletter_requested_at: nowIso(),
+  });
 
   return { ok: true };
 }
@@ -168,20 +264,24 @@ export async function confirmNewsletterSubscription(
   const newsletterTopicId = getNewsletterTopicId();
   const newsletterSegmentId = getNewsletterSegmentId();
 
-  const { data: existing, error: getError } = await resend.contacts.get({
-    email: normalized,
-  });
+  const existing = await getContact(normalized);
 
-  if (getError && !existing) {
-    return { ok: false, error: "Contact not found" };
+  if (existing.notFound || !existing.contact) {
+    // Confirmation link should only work for contacts that started signup.
+    return {
+      ok: false,
+      error: "This confirmation link is invalid or has expired.",
+    };
   }
 
-  if (existing?.unsubscribed) {
+  if (existing.contact.unsubscribed) {
     return {
       ok: false,
       error: "This email is unsubscribed and cannot be re-subscribed here.",
     };
   }
+
+  await ensureLeadContactProperties();
 
   const { error: updateError } = await resend.contacts.update({
     email: normalized,
@@ -192,22 +292,26 @@ export async function confirmNewsletterSubscription(
     },
   });
 
-  if (updateError) {
-    return { ok: false, error: updateError.message };
+  if (updateError && !isContactNotFoundError(updateError)) {
+    // Properties may fail; still try topic opt-in.
+    console.warn("[contacts] confirm property update failed:", updateError.message);
   }
 
   if (newsletterSegmentId) {
-    await resend.contacts.segments.add({
-      email: normalized,
-      segmentId: newsletterSegmentId,
-    });
+    await softAddSegment(normalized, newsletterSegmentId);
   }
 
   if (newsletterTopicId) {
-    await resend.contacts.topics.update({
+    const { error: topicError } = await resend.contacts.topics.update({
       email: normalized,
       topics: [{ id: newsletterTopicId, subscription: "opt_in" }],
     });
+    if (topicError) {
+      return {
+        ok: false,
+        error: "We couldn't confirm your subscription. Please try again.",
+      };
+    }
   }
 
   return { ok: true };
@@ -220,6 +324,14 @@ export async function unsubscribeContact(
   const normalized = email.trim().toLowerCase();
   const newsletterTopicId = getNewsletterTopicId();
 
+  const existing = await getContact(normalized);
+  if (existing.notFound || !existing.contact) {
+    // Idempotent success — nothing to unsubscribe.
+    return { ok: true };
+  }
+
+  await ensureLeadContactProperties();
+
   const { error } = await resend.contacts.update({
     email: normalized,
     unsubscribed: true,
@@ -229,8 +341,15 @@ export async function unsubscribeContact(
     },
   });
 
-  if (error) {
-    return { ok: false, error: error.message };
+  if (error && !isContactNotFoundError(error)) {
+    // Fall back to global unsubscribe without properties.
+    const bare = await resend.contacts.update({
+      email: normalized,
+      unsubscribed: true,
+    });
+    if (bare.error) {
+      return { ok: false, error: "We couldn't update your preferences." };
+    }
   }
 
   if (newsletterTopicId) {
@@ -247,12 +366,10 @@ export async function wasChecklistRecentlySent(
   email: string,
   withinMs = 1000 * 60 * 60 * 24,
 ): Promise<boolean> {
-  const resend = getResendClient();
-  const { data } = await resend.contacts.get({
-    email: email.trim().toLowerCase(),
-  });
+  const existing = await getContact(email.trim().toLowerCase());
+  if (!existing.contact) return false;
 
-  const raw = data?.properties?.checklist_sent_at;
+  const raw = existing.contact.properties?.checklist_sent_at;
   if (typeof raw !== "string") return false;
   const sentAt = Date.parse(raw);
   if (Number.isNaN(sentAt)) return false;
@@ -260,11 +377,7 @@ export async function wasChecklistRecentlySent(
 }
 
 export async function markChecklistSent(email: string): Promise<void> {
-  const resend = getResendClient();
-  await resend.contacts.update({
-    email: email.trim().toLowerCase(),
-    properties: {
-      checklist_sent_at: nowIso(),
-    },
+  await softUpdateProperties(email.trim().toLowerCase(), {
+    checklist_sent_at: nowIso(),
   });
 }

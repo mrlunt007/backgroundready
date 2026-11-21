@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { unsubscribeContact } from "@/lib/email/contacts";
 import { getResendApiKey } from "@/lib/email/env";
+import { toUserFacingLeadError } from "@/lib/email/resend-errors";
 import { verifyLeadToken } from "@/lib/email/tokens";
 
 export const runtime = "nodejs";
@@ -39,7 +40,10 @@ export async function POST(request: Request) {
 
   const result = await unsubscribeContact(verified.email);
   if (!result.ok) {
-    return NextResponse.json({ error: result.error }, { status: 400 });
+    return NextResponse.json(
+      { error: toUserFacingLeadError(result.error) },
+      { status: 400 },
+    );
   }
 
   return NextResponse.json({ ok: true });

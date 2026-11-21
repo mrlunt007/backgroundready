@@ -4,6 +4,7 @@ import {
   upsertChecklistContact,
   wasChecklistRecentlySent,
 } from "@/lib/email/contacts";
+import { toUserFacingLeadError } from "@/lib/email/resend-errors";
 import { sendChecklistDeliveryEmail } from "@/lib/email/send-checklist";
 import { sendNewsletterConfirmEmail } from "@/lib/email/send-newsletter-confirm";
 import type { ChecklistLeadInput } from "@/lib/email/validation";
@@ -19,6 +20,7 @@ export async function processChecklistLead(input: ChecklistLeadInput): Promise<
 > {
   const email = input.email.trim().toLowerCase();
 
+  // Contact sync is important, but PDF delivery is the primary success path.
   const contactResult = await upsertChecklistContact({
     email,
     source: input.source,
@@ -26,7 +28,8 @@ export async function processChecklistLead(input: ChecklistLeadInput): Promise<
   });
 
   if (!contactResult.ok) {
-    return { ok: false, error: contactResult.error, status: 502 };
+    console.warn("[checklist] contact sync failed:", contactResult.error);
+    // Continue — still attempt delivery for a new subscriber.
   }
 
   const recentlySent = await wasChecklistRecentlySent(email);
@@ -40,7 +43,11 @@ export async function processChecklistLead(input: ChecklistLeadInput): Promise<
   } else {
     const sent = await sendChecklistDeliveryEmail(email);
     if (!sent.ok) {
-      return { ok: false, error: sent.error, status: 502 };
+      return {
+        ok: false,
+        error: toUserFacingLeadError(sent.error),
+        status: 502,
+      };
     }
     downloadUrl = sent.downloadUrl;
     await markChecklistSent(email);
@@ -52,7 +59,7 @@ export async function processChecklistLead(input: ChecklistLeadInput): Promise<
       email,
       source: input.source,
     });
-    if (pending.ok) {
+    if (pending.ok && !pending.skipConfirmEmail) {
       const confirm = await sendNewsletterConfirmEmail(email);
       newsletterConfirmSent = confirm.ok;
     }

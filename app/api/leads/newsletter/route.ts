@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { startNewsletterSubscription } from "@/lib/email/contacts";
 import { getResendApiKey } from "@/lib/email/env";
 import { readJsonBody } from "@/lib/email/request-guards";
+import { toUserFacingLeadError } from "@/lib/email/resend-errors";
 import { sendNewsletterConfirmEmail } from "@/lib/email/send-newsletter-confirm";
 import { newsletterLeadSchema } from "@/lib/email/validation";
 
@@ -39,7 +40,10 @@ export async function POST(request: Request) {
     });
 
     if (!pending.ok) {
-      return NextResponse.json({ error: pending.error }, { status: 400 });
+      return NextResponse.json(
+        { error: toUserFacingLeadError(pending.error) },
+        { status: 400 },
+      );
     }
 
     if (pending.skipConfirmEmail) {
@@ -51,7 +55,10 @@ export async function POST(request: Request) {
 
     const sent = await sendNewsletterConfirmEmail(parsed.data.email);
     if (!sent.ok) {
-      return NextResponse.json({ error: sent.error }, { status: 502 });
+      return NextResponse.json(
+        { error: toUserFacingLeadError(sent.error) },
+        { status: 502 },
+      );
     }
 
     return NextResponse.json({ ok: true });
